@@ -1,5 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 
+import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
@@ -12,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="d-flex flex-column min-vh-100">
-        <Header />
+        <ToastContainer position="top-center" autoClose={2000} /> <Header />
         <main className="flex-grow-1">
           <Routes>
             <Route path="/" element={<Home />} />

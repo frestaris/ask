@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, InputGroup, Button, Spinner, Alert } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -34,6 +35,7 @@ function SignUp() {
       }
       setLoading(false);
       if (res.ok) {
+        toast.success("User registered!");
         navigate("/sign-in");
       }
     } catch (error) {
