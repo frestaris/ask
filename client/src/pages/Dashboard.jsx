@@ -1,5 +1,72 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import DashSidebar from "../components/DashSidebar";
+import DashProfile from "../components/DashProfile";
+import { Offcanvas } from "react-bootstrap";
+import { useSidebar } from "../contexts/SidebarContext";
+import { useSelector } from "react-redux";
+
 function Dashboard() {
-  return <div>Dashboard</div>;
+  const { theme } = useSelector((state) => state.theme);
+  const location = useLocation();
+  const [tab, setTab] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+  const { showSidebar, toggleSidebar } = useSidebar();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const tabFromUrl = urlParams.get("tab");
+    if (tabFromUrl) {
+      setTab(tabFromUrl);
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return (
+    <div className={`d-flex vh-100 ${theme}`}>
+      {isMobile && (
+        <Offcanvas
+          show={showSidebar}
+          onHide={toggleSidebar}
+          placement="start"
+          className={`w-50 ${theme === "dark" ? "bg-dark" : "bg-light"}`} // Dynamically apply bg-dark
+        >
+          <Offcanvas.Header closeButton></Offcanvas.Header>
+          <Offcanvas.Body>
+            <DashSidebar />
+          </Offcanvas.Body>
+        </Offcanvas>
+      )}
+      {!isMobile && (
+        <div
+          className={`d-none d-md-block p-3 border-right ${theme}`}
+          style={{
+            minHeight: "100vh",
+            width: "250px",
+            borderRight: "2px solid #ccc",
+            boxShadow: "2px 0 5px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <DashSidebar />
+        </div>
+      )}
+      <div className="flex-grow-1 p-3">
+        {tab === "profile" && <DashProfile />}
+      </div>
+    </div>
+  );
 }
 
 export default Dashboard;

@@ -8,7 +8,7 @@ import {
 
 function FooterCom() {
   return (
-    <footer className="border-top container py-4 mt-5">
+    <footer className="border-top container py-4">
       <div className="d-flex justify-content-between">
         <div>&copy; {new Date().getFullYear()} Ask!</div>
         <div className="d-flex gap-3">
