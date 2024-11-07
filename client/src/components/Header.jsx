@@ -1,35 +1,27 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaMoon, FaSun } from "react-icons/fa";
-import { useSelector } from "react-redux";
 import { Dropdown, Button } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../redux/theme/themeSlice";
 
 const Header = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const dispatch = useDispatch(toggleTheme);
   const { currentUser } = useSelector((state) => state.user);
-
-  const handleDarkModeToggle = () => {
-    setDarkMode(!darkMode);
-  };
+  const { theme } = useSelector((state) => state.theme);
 
   return (
-    <nav
-      className={`navbar navbar-expand-lg ${
-        darkMode ? "bg-dark text-light" : "bg-light text-dark"
-      } shadow-sm px-4 py-2`}
-    >
+    <nav className={`navbar navbar-expand-lg`}>
       <div className="container-fluid">
         <Link to="/" className="navbar-brand fw-semibold text-warning">
           Ask!
         </Link>
         <div className="d-flex align-items-center ms-auto">
           <button
-            className={`btn btn-link fs-3 ${
-              darkMode ? "text-light" : "text-dark"
-            }`}
-            onClick={handleDarkModeToggle}
+            className={`btn btn-link fs-3`}
+            onClick={() => dispatch(toggleTheme())}
+            style={{ color: "orange" }}
           >
-            {darkMode ? <FaSun /> : <FaMoon />}
+            {theme === "dark" ? <FaSun /> : <FaMoon />}
           </button>
           {currentUser ? (
             <Dropdown align="end" className="ms-3">

@@ -10,7 +10,7 @@ function FooterCom() {
   return (
     <footer className="border-top container py-4 mt-5">
       <div className="d-flex justify-content-between">
-        <div className="text-muted">&copy; {new Date().getFullYear()} Ask!</div>
+        <div>&copy; {new Date().getFullYear()} Ask!</div>
         <div className="d-flex gap-3">
           <a href="#" className="text-secondary">
             <BsFacebook size={20} />

@@ -73,7 +73,7 @@ function SignIn() {
               Ask
             </span>
           </Link>
-          <p className="small mt-3 text-muted">
+          <p className="small mt-3">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque saepe
             obcaecati, ut quis magni sit. Dolores dicta nobis odio. Ex
             consectetur similique quasi id nihil ea perspiciatis tempore
