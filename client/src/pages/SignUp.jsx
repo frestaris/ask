@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, InputGroup, Button, Spinner, Alert } from "react-bootstrap";
 import { toast } from "react-toastify";
+import OAuth from "../components/OAuth";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -119,6 +120,7 @@ function SignUp() {
             >
               {loading ? <Spinner animation="border" /> : "Sign Up"}
             </Button>
+            <OAuth />
           </form>
           <div className="d-flex gap-2 small mt-3">
             <span>Have an account?</span>

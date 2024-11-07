@@ -8,6 +8,7 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 const testData = {
   email: "test@gmail.com",
@@ -118,6 +119,7 @@ function SignIn() {
             >
               {loading ? <Spinner animation="border" /> : "Sign In"}
             </Button>
+            <OAuth />
           </form>
           <div className="d-flex gap-2 small mt-3">
             <span>Don't have an account?</span>
