@@ -1,5 +1,5 @@
 import { Button } from "react-bootstrap";
-import { BsFacebook, BsGoogle } from "react-icons/bs";
+import { BsGoogle } from "react-icons/bs";
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";
