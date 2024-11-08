@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { FaMoon, FaSun, FaBars } from "react-icons/fa";
+import { FaMoon, FaSun, FaBars, FaPlus } from "react-icons/fa";
 import { Dropdown, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
@@ -47,6 +47,15 @@ const Header = () => {
           Ask!
         </Link>
         <div className="d-flex align-items-center ms-auto">
+          {currentUser && (
+            <Link
+              to="/create-question"
+              className="text-decoration-none"
+              style={{ color: "orange" }}
+            >
+              <FaPlus /> Create
+            </Link>
+          )}
           <button
             className={`btn btn-link fs-3`}
             onClick={() => dispatch(toggleTheme())}

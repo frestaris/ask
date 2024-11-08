@@ -17,9 +17,32 @@
   color: #ffffff !important;
 }
 
-/* Dark mode input styles */
 .dark-mode .form-control {
   background-color: #333333 !important;
   color: #ffffff !important;
   border-color: #555555;
+}
+
+.quill-dark .ql-toolbar {
+  background-color: #333;
+}
+
+.quill-dark .ql-stroke {
+  stroke: orange !important;
+}
+
+.quill-dark .ql-picker-item:hover {
+  color: orange !important;
+}
+
+.quill-dark .ql-picker .ql-picker-label {
+  color: orange !important;
+}
+
+.ql-editor.ql-blank::before {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.quill-dark .ql-editor.ql-blank::before {
+  color: white !important; /
 }

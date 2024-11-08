@@ -28,7 +28,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { toast } from "react-toastify";
 
 function DashProfile() {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -239,8 +239,12 @@ function DashProfile() {
           className="form-control"
           onChange={handleChange}
         />
-        <button type="submit" className="btn btn-outline-warning mt-2">
-          Update
+        <button
+          disabled={loading || imageFileUploading}
+          type="submit"
+          className="btn btn-outline-warning mt-2"
+        >
+          {loading ? "Loading..." : "Update"}
         </button>
       </form>
       <div className="d-flex justify-content-between mt-4 text-danger">

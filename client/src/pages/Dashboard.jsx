@@ -41,7 +41,7 @@ function Dashboard() {
           show={showSidebar}
           onHide={toggleSidebar}
           placement="start"
-          className={`w-50 ${theme === "dark" ? "bg-dark" : "bg-light"}`} // Dynamically apply bg-dark
+          className={`${theme === "dark" ? "bg-dark" : "bg-light"}`}
         >
           <Offcanvas.Header closeButton></Offcanvas.Header>
           <Offcanvas.Body>

@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import FooterCom from "./components/FooterCom";
 import PrivateRoute from "./components/PrivateRoute";
 import { SidebarProvider } from "./contexts/SidebarContext";
+import CreateQuestion from "./pages/CreateQuestion";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/sign-up" element={<SignUp />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/create-question" element={<CreateQuestion />} />
               </Route>
             </Routes>
           </main>
