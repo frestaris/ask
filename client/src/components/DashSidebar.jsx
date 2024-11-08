@@ -12,6 +12,7 @@ function DashSidebar() {
   const [tab, setTab] = useState("");
   const { closeSidebar } = useSidebar();
   const { theme } = useSelector((state) => state.theme);
+  const currentUser = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -58,8 +59,18 @@ function DashSidebar() {
             active={tab === "profile"}
             className={`d-flex align-items-center border-0 rounded-3 mb-2 hover-item ${ItemClass}`}
           >
-            <HiUser className="me-2" />
-            Profile
+            <div className="d-flex justify-content-between w-100 align-center">
+              <div className="d-flex align-items-center">
+                <HiUser className="me-2" />
+                Profile
+              </div>
+              <span
+                className="rounded px-2"
+                style={{ border: "1px solid orange" }}
+              >
+                {currentUser.isAdmin ? "Admin" : "User"}
+              </span>
+            </div>
           </ListGroup.Item>
         </Link>
         <hr />

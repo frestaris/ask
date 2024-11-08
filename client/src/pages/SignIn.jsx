@@ -11,7 +11,7 @@ import {
 import OAuth from "../components/OAuth";
 
 const testData = {
-  email: "test@gmail.com",
+  email: "admin@gmail.com",
   password: "123456",
 };
 

@@ -48,6 +48,7 @@ export const signin = async (req, res, next) => {
     const token = jwt.sign(
       {
         id: validUser._id,
+        isAdmin: validUser.isAdmin,
       },
       process.env.JWT_SECRET_KEY
     );
@@ -90,7 +91,10 @@ export const google = async (req, res, next) => {
         profilePicture: googlePhotoURL,
       });
       await newUser.save();
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
+      const token = jwt.sign(
+        { id: user._id, isAdmin: user.isAdmin },
+        process.env.JWT_SECRET_KEY
+      );
       const { password, ...rest } = newUser._doc;
       res
         .status(200)
