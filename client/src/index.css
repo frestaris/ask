@@ -16,3 +16,10 @@
   background-color: #444 !important;
   color: #ffffff !important;
 }
+
+/* Dark mode input styles */
+.dark-mode .form-control {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+  border-color: #555555;
+}

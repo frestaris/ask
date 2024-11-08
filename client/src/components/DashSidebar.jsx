@@ -3,13 +3,16 @@ import { Link, useLocation } from "react-router-dom";
 import { HiArrowSmRight, HiUser } from "react-icons/hi";
 import { ListGroup } from "react-bootstrap";
 import { useSidebar } from "../contexts/SidebarContext";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { signoutSuccess } from "../redux/user/userSlice";
+import { toast } from "react-toastify";
 
 function DashSidebar() {
   const location = useLocation();
   const [tab, setTab] = useState("");
   const { closeSidebar } = useSidebar();
   const { theme } = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -20,6 +23,23 @@ function DashSidebar() {
   }, [location.search]);
 
   const ItemClass = theme === "dark" ? "bg-warning" : "bg-light";
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+        toast.success("User logged out!");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <div
@@ -42,7 +62,9 @@ function DashSidebar() {
             Profile
           </ListGroup.Item>
         </Link>
+        <hr />
         <ListGroup.Item
+          onClick={handleSignout}
           action
           className={`d-flex align-items-center border-0 rounded-3 mb-2 hover-item ${ItemClass}`}
         >

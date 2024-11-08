@@ -15,25 +15,26 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
+  signoutSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-import { Alert, Modal, Button } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
+import { toast } from "react-toastify";
+
 function DashProfile() {
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
   const [formData, setFormData] = useState("");
   const [imageFileUploading, setImageFileUploading] = useState(false);
-  const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
-  const [updateUserError, setUpdateUserError] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const filePickerRef = useRef();
@@ -45,15 +46,13 @@ function DashProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setUpdateUserError(null);
-    setUpdateUserSuccess(null);
     // if no changes return
     if (Object.keys(formData).length === 0) {
-      setUpdateUserError("No changes made");
+      toast.info("No changes made");
       return;
     }
     if (imageFileUploading) {
-      setUpdateUserError("Please wait for image to upload");
+      toast.info("Please wait for image to upload");
       return;
     }
     try {
@@ -68,14 +67,14 @@ function DashProfile() {
       const data = await res.json();
       if (!res.ok) {
         dispatch(updateFailure(data.message));
-        setUpdateUserError(data.message);
+        toast.error(data.message);
       } else {
         dispatch(updateSuccess(data));
-        setUpdateUserSuccess("User's profile updated successfully");
+        toast.success("User's profile updated successfully");
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
-      setUpdateUserError(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -123,7 +122,6 @@ function DashProfile() {
           setImageFileUploadProgress(null);
           setFormData({ ...formData, profilePicture: downloadUrl });
           setImageFileUploading(false);
-          handleSubmit();
         });
       }
     );
@@ -141,9 +139,27 @@ function DashProfile() {
         dispatch(deleteUserFailure(data.message));
       } else {
         dispatch(deleteUserSuccess(data));
+        toast.success("User deleted!");
       }
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
+    }
+  };
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+        toast.success("User logged out!");
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -236,23 +252,10 @@ function DashProfile() {
         >
           Delete Account
         </span>
-        <span style={{ cursor: "pointer" }}>Sign Out</span>
+        <span onClick={handleSignout} style={{ cursor: "pointer" }}>
+          Sign Out
+        </span>
       </div>
-      {updateUserSuccess && (
-        <Alert color="success" className="mt-5">
-          {updateUserSuccess}
-        </Alert>
-      )}
-      {updateUserError && (
-        <Alert color="danger" className="mt-5">
-          {updateUserError}
-        </Alert>
-      )}
-      {error && (
-        <Alert color="danger" className="mt-5">
-          {error}
-        </Alert>
-      )}
       <Modal
         show={showModal}
         onHide={() => setShowModal(false)}

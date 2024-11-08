@@ -4,6 +4,8 @@ import { Dropdown, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { useSidebar } from "../contexts/SidebarContext";
+import { signoutSuccess } from "../redux/user/userSlice";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const dispatch = useDispatch(toggleTheme);
@@ -14,8 +16,32 @@ const Header = () => {
 
   const isDashboardPage = location.pathname === "/dashboard";
 
+  const handleSignout = async () => {
+    try {
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signoutSuccess());
+        toast.info("User logged out!");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
-    <nav className={`navbar navbar-expand-lg border-bottom shadow-sm`}>
+    <nav
+      className={`navbar navbar-expand-lg border-bottom shadow-sm ${
+        theme === "dark" ? "text-light" : "text-dark"
+      }`}
+      style={{
+        backgroundColor: theme === "dark" ? "#333333" : "#f8f9fa",
+      }}
+    >
       <div className="container-fluid">
         <Link to="/" className="navbar-brand fw-semibold text-warning">
           Ask!
@@ -63,12 +89,12 @@ const Header = () => {
                 <Link to="/dashboard?tab=profile" className="dropdown-item">
                   Profile
                 </Link>
-                <Dropdown.Item>Sign out</Dropdown.Item>
+                <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           ) : (
             <Link to="/sign-in" className="ms-3">
-              <Button variant="outline-primary">Sign In</Button>
+              <Button variant="outline-warning">Sign In</Button>
             </Link>
           )}
           {isDashboardPage && (

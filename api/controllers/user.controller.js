@@ -12,6 +12,11 @@ export const updateUser = async (req, res, next) => {
     }
     req.body.password = bcryptjs.hashSync(req.body.password, 10);
   }
+  const updatedFields = {};
+
+  if (req.body.profilePicture) {
+    updatedFields.profilePicture = req.body.profilePicture;
+  }
   if (req.body.username) {
     if (req.body.username.length < 7 || req.body.username.length > 20) {
       return next(
@@ -26,24 +31,24 @@ export const updateUser = async (req, res, next) => {
         errorHandler(400, "Username can only contain letters and numbers")
       );
     }
-    try {
-      const updateUser = await User.findByIdAndUpdate(
-        req.params.userId,
-        {
-          $set: {
-            username: req.body.username,
-            email: req.body.email,
-            profilePicture: req.body.profilePicture,
-            password: req.body.password,
-          },
-        },
-        { new: true }
-      );
-      const { password, ...rest } = updateUser._doc;
-      res.status(200).json(rest);
-    } catch (error) {
-      next(error);
-    }
+    updatedFields.username = req.body.username;
+  }
+
+  if (req.body.email) {
+    updatedFields.email = req.body.email;
+  }
+
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      req.params.userId,
+      { $set: updatedFields },
+      { new: true }
+    );
+
+    const { password, ...rest } = updateUser._doc;
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -54,6 +59,17 @@ export const deleteUser = async (req, res, next) => {
   try {
     await User.findByIdAndDelete(req.params.userId);
     res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const signout = (req, res, next) => {
+  try {
+    res
+      .clearCookie("access_token")
+      .status(200)
+      .json("User has been signed out");
   } catch (error) {
     next(error);
   }

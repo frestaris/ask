@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, InputGroup, Button, Spinner, Alert } from "react-bootstrap";
 import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
+import { useSelector } from "react-redux";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const { theme } = useSelector((state) => state.theme);
 
   const navigate = useNavigate();
 
@@ -46,7 +48,11 @@ function SignUp() {
   };
 
   return (
-    <div className="d-flex mt-5 justify-content-center align-items-center">
+    <div
+      className={`d-flex mt-5 justify-content-center align-items-center ${
+        theme === "dark" ? "dark-mode" : ""
+      }`}
+    >
       <div className="container-sm d-flex mt-5 p-3 flex-column flex-md-row align-items-center gap-4">
         <div className="flex-grow-1 col-12 col-md-6">
           <Link

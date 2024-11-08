@@ -19,6 +19,7 @@ function SignIn() {
   const [formData, setFormData] = useState(testData);
 
   const { loading, error: errorMessage } = useSelector((state) => state.user);
+  const { theme } = useSelector((state) => state.theme);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,7 +57,11 @@ function SignIn() {
   };
 
   return (
-    <div className="d-flex mt-5 justify-content-center align-items-center">
+    <div
+      className={`d-flex mt-5 justify-content-center align-items-center ${
+        theme === "dark" ? "dark-mode" : ""
+      }`}
+    >
       <div className="container-sm d-flex mt-5 p-3 flex-column flex-md-row align-items-center gap-4">
         <div className="flex-grow-1 col-12 col-md-6">
           <Link
