@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
+import DashQuestions from "../components/DashQuestions";
 import { Offcanvas } from "react-bootstrap";
 import { useSidebar } from "../contexts/SidebarContext";
 import { useSelector } from "react-redux";
@@ -63,7 +64,10 @@ function Dashboard() {
         </div>
       )}
       <div className="flex-grow-1 p-3">
+        {/* Profile */}
         {tab === "profile" && <DashProfile />}
+        {/* Questions */}
+        {tab === "questions" && <DashQuestions />}
       </div>
     </div>
   );
