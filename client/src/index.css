@@ -3,7 +3,7 @@
 }
 
 .hover-item.active {
-  background-color: #f3f4f6 !important;
+  background-color: #e0e0e0 !important;
   color: black !important;
 }
 
@@ -13,8 +13,8 @@
 }
 
 .dark-mode .hover-item.active {
-  background-color: #444 !important;
-  color: #ffffff !important;
+  background-color: #ffc107a8 !important;
+  color: black !important;
 }
 
 .dark-mode .form-control {
@@ -31,15 +31,15 @@
 }
 
 .quill-dark .ql-stroke {
-  stroke: orange !important;
+  stroke: #ffa500 !important;
 }
 
 .quill-dark .ql-picker-item:hover {
-  color: orange !important;
+  color: #ffa500 !important;
 }
 
 .quill-dark .ql-picker .ql-picker-label {
-  color: orange !important;
+  color: #ffa500 !important;
 }
 
 .ql-editor.ql-blank::before {
@@ -52,22 +52,22 @@
 
 .form-control:hover,
 .form-select:hover {
-  border-color: #ffc107; 
+  border-color: #ffa500; 
   box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25); 
 }
 
 .form-control:focus,
 .form-select:focus{
-  border-color: #ffc107 !important; 
+  border-color: #ffa500 !important; 
   box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25) !important; 
 }
 
 
 
 .form-select option a:hover {
-  background-color: #ffc107;
+  background-color: #ffa500;
 }
 .form-select option:checked {
-  background-color: #ffc107 !important;  
+  background-color: #ffa500 !important;  
 }
 
