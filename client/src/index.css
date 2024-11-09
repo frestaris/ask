@@ -62,12 +62,3 @@
   box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25) !important; 
 }
 
-
-
-.form-select option a:hover {
-  background-color: #ffa500;
-}
-.form-select option:checked {
-  background-color: #ffa500 !important;  
-}
-

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { HiArrowSmRight, HiUser, HiDocumentText } from "react-icons/hi";
+import { HiArrowSmRight, HiUser } from "react-icons/hi";
+import { RiQuestionAnswerFill } from "react-icons/ri";
 import { ListGroup } from "react-bootstrap";
 import { useSidebar } from "../contexts/SidebarContext";
 import { useSelector, useDispatch } from "react-redux";
@@ -85,7 +86,7 @@ function DashSidebar() {
                 color: theme === "dark" ? "#fff" : "",
               }}
             >
-              <HiDocumentText className="me-2" />
+              <RiQuestionAnswerFill className="me-2" />
               Questions
             </ListGroup.Item>
           </Link>
