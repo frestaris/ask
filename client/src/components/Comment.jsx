@@ -4,7 +4,7 @@ import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-function Comment({ comment, onLike, onEdit }) {
+function Comment({ comment, onLike, onEdit, onDelete }) {
   const [user, setUser] = useState({});
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
@@ -107,29 +107,41 @@ function Comment({ comment, onLike, onEdit }) {
       ) : (
         <>
           <p className="pb-2">{comment.content}</p>
-          <div className="d-inline-flex align-items-center border-top mx-auto">
-            <Button
-              style={{
-                backgroundColor: "transparent",
-                border: "none",
-              }}
-              onClick={() => {
-                onLike(comment._id);
-              }}
-            >
-              <FaThumbsUp className="mb-1" size="1em" color={iconColor} />
-            </Button>
-            <p className="mb-0">
-              {comment.numberOfLikes > 0 &&
-                `${comment.numberOfLikes} ${
-                  comment.numberOfLikes === 1 ? "Like" : "Likes"
-                }`}
-            </p>
+          <div className="d-flex justify-content-between align-items-centermx-auto">
+            <div className="align-items-center d-inline-flex border-top">
+              <Button
+                style={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                }}
+                onClick={() => {
+                  onLike(comment._id);
+                }}
+              >
+                <FaThumbsUp className="mb-1" size="1em" color={iconColor} />
+              </Button>
+              <p className="mb-0">
+                {comment.numberOfLikes > 0 &&
+                  `${comment.numberOfLikes} ${
+                    comment.numberOfLikes === 1 ? "Like" : "Likes"
+                  }`}
+              </p>
+            </div>
             {currentUser &&
               (currentUser._id === comment.userId || currentUser.isAdmin) && (
-                <Button variant="link" size="sm" onClick={handleEdit}>
-                  Edit
-                </Button>
+                <div className="d-inline-flex border-top align-items-center">
+                  <Button variant="link" size="sm" onClick={handleEdit}>
+                    Edit
+                  </Button>
+                  <Button
+                    variant="link"
+                    className="text-danger text-decoration-none"
+                    size="sm"
+                    onClick={() => onDelete(comment._id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
               )}
           </div>
         </>
