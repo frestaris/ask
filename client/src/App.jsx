@@ -28,9 +28,9 @@ function App() {
               <Route path="/sign-up" element={<SignUp />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/create-question" element={<CreateQuestion />} />
               </Route>
               <Route element={<OnlyAdminPrivateRoute />}>
-                <Route path="/create-question" element={<CreateQuestion />} />
                 <Route
                   path="/update-question/:questionId"
                   element={<UpdateQuestion />}

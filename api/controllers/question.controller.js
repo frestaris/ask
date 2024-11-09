@@ -36,31 +36,20 @@ export const getQuestions = async (req, res, next) => {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirection = req.query.order === "asc" ? 1 : -1;
-    const questions = await Question.find({
-      ...(req.query.userId && { userId: req.query.userId }),
-      ...(req.query.category && { category: req.query.category }),
-      ...(req.query.slug && { userId: req.query.slug }),
-      ...(req.query.questionsId && { _id: req.query.questionsId }),
-      ...(req.query.searchTerm && {
-        $or: [
-          { title: { $regex: req.query.searchTerm, $option: "i" } },
-          { content: { $regex: req.query.searchTerm, $option: "i" } },
-        ],
-      }),
-    })
+
+    const questions = await Question.find({})
       .sort({ updatedAt: sortDirection })
       .skip(startIndex)
       .limit(limit);
+
     const totalQuestions = await Question.countDocuments();
-    const now = new Date();
-    const oneMonthAgo = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate()
-    );
+
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
     const lastMonthQuestions = await Question.countDocuments({
       createdAt: { $gte: oneMonthAgo },
     });
+
     res.status(200).json({
       questions,
       totalQuestions,

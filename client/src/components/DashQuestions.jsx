@@ -41,6 +41,7 @@ function DashQuestions() {
         `/api/question/getquestions?userId=${currentUser._id}&startIndex=${startIndex}`
       );
       const data = await res.json();
+      console.log(data);
       if (res.ok) {
         setUserQuestions((prev) => [...prev, ...data.questions]);
         if (data.questions.length < 9) {
@@ -75,10 +76,12 @@ function DashQuestions() {
 
   return (
     <div
-      className="table-responsive p-3"
+      className="pb-2"
       style={{
         backgroundColor: theme === "dark" ? "#333333" : "#f8f9fa",
         color: theme === "dark" ? "#fff" : "#000",
+        maxHeight: "680px",
+        overflowY: "auto",
       }}
     >
       {currentUser.isAdmin && userQuestions.length > 0 ? (
