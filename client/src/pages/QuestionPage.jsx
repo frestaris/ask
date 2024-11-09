@@ -89,7 +89,7 @@ function QuestionPage() {
             className="question-content"
             dangerouslySetInnerHTML={{ __html: question && question.content }}
           ></div>
-          <CommentSection />
+          <CommentSection questionId={question._id} />
         </Col>
       </Row>
     </Container>

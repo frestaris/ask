@@ -1,12 +1,35 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Form, Alert, Col, Row, Image } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Comment from "./Comment";
 
-function CommentSection({ postId }) {
+function CommentSection({ questionId }) {
   const { currentUser } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
   const [commentError, setCommentError] = useState(null);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const getComments = async () => {
+      if (!questionId) {
+        console.error("Question ID is undefined");
+        return;
+      }
+      try {
+        const res = await fetch(
+          `/api/comment/getQuestionComments/${questionId}`
+        );
+        if (res.ok) {
+          const data = await res.json();
+          setComments(data);
+        }
+      } catch (error) {
+        console.log("Error fetching comments:", error);
+      }
+    };
+    getComments();
+  }, [questionId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +40,7 @@ function CommentSection({ postId }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           content: comment,
-          postId,
+          questionId,
           userId: currentUser._id,
         }),
       });
@@ -25,6 +48,7 @@ function CommentSection({ postId }) {
       if (res.ok) {
         setComment("");
         setCommentError(null);
+        setComments([data, ...comments]);
       }
     } catch (error) {
       setCommentError(error.message);
@@ -85,6 +109,21 @@ function CommentSection({ postId }) {
             </Alert>
           )}
         </Form>
+      )}
+      {comments.length === 0 ? (
+        <p className="text-sm my-5">No comments yet!</p>
+      ) : (
+        <>
+          <div className="text-sm my-5 flex items-center gap-1">
+            <p>
+              Comments:{" "}
+              <span className="border p-2 rounded">{comments.length}</span>
+            </p>
+          </div>
+          {comments.map((comment) => (
+            <Comment key={comment._id} comment={comment} />
+          ))}
+        </>
       )}
     </div>
   );
