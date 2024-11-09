@@ -14,7 +14,7 @@ import { SidebarProvider } from "./contexts/SidebarContext";
 import CreateQuestion from "./pages/CreateQuestion";
 import UpdateQuestion from "./pages/UpdateQuestion";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
-
+import QuestionPage from "./pages/QuestionPage";
 function App() {
   return (
     <BrowserRouter>
@@ -26,6 +26,10 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
+              <Route
+                path="/question/:questionSlug"
+                element={<QuestionPage />}
+              />
               <Route element={<PrivateRoute />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/create-question" element={<CreateQuestion />} />

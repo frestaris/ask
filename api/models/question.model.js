@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const questionSchema = new mongoose.Schema(
   {
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId, // Change String to ObjectId
+      ref: "User", // Reference to the User model
       required: true,
     },
     content: { type: String, required: true },
