@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Table, Button, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { RiEdit2Fill, RiDeleteBin7Fill } from "react-icons/ri";
+import { RiEdit2Fill } from "react-icons/ri";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { toast } from "react-toastify";
 
@@ -107,23 +107,21 @@ function DashQuestions() {
                 <tr key={question._id}>
                   <td>{new Date(question.updatedAt).toLocaleDateString()}</td>
                   <td>
-                    <Link to={`/question${question.slug}`}>
-                      <img
-                        src={question.image}
-                        alt={question.title}
-                        style={{
-                          width: "100px",
-                          height: "60px",
-                          objectFit: "cover",
-                          backgroundColor: "#ccc",
-                        }}
-                      />
-                    </Link>
+                    <img
+                      src={question.image}
+                      alt={question.title}
+                      style={{
+                        width: "100px",
+                        height: "60px",
+                        objectFit: "cover",
+                        backgroundColor: "#ccc",
+                      }}
+                    />
                   </td>
                   <td>
                     <Link
                       className={theme === "dark" ? "text-white" : "text-dark"}
-                      to={`/question${question.slug}`}
+                      to={`/question/${question.slug}`}
                     >
                       {question.title}
                     </Link>
@@ -131,17 +129,13 @@ function DashQuestions() {
                   <td>{question.category}</td>
                   <td className="text-center">
                     <Button
-                      variant="danger"
+                      variant="outline-danger"
                       onClick={() => {
                         setShowModal(true);
                         setQuestionIdToDelete(question._id);
                       }}
-                      style={{
-                        backgroundColor: "transparent",
-                        color: "red",
-                      }}
                     >
-                      <RiDeleteBin7Fill />
+                      Delete
                     </Button>
                   </td>
                   <td className="text-center">
