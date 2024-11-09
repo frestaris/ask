@@ -12,6 +12,8 @@ import FooterCom from "./components/FooterCom";
 import PrivateRoute from "./components/PrivateRoute";
 import { SidebarProvider } from "./contexts/SidebarContext";
 import CreateQuestion from "./pages/CreateQuestion";
+import UpdateQuestion from "./pages/UpdateQuestion";
+import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 
 function App() {
   return (
@@ -26,7 +28,13 @@ function App() {
               <Route path="/sign-up" element={<SignUp />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/dashboard" element={<Dashboard />} />
+              </Route>
+              <Route element={<OnlyAdminPrivateRoute />}>
                 <Route path="/create-question" element={<CreateQuestion />} />
+                <Route
+                  path="/update-question/:questionId"
+                  element={<UpdateQuestion />}
+                />
               </Route>
             </Routes>
           </main>

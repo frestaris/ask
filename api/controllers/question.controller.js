@@ -85,3 +85,28 @@ export const deleteQuestion = async (req, res, next) => {
     console.log(error.message);
   }
 };
+
+export const updateQuestion = async (req, res, next) => {
+  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
+    return next(
+      errorHandler(403, "You are not allowed to update this question")
+    );
+  }
+  try {
+    const updatedQuestion = await Question.findByIdAndUpdate(
+      req.params.questionId,
+      {
+        $set: {
+          title: req.body.title,
+          content: req.body.content,
+          category: req.body.category,
+          image: req.body.image,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedQuestion);
+  } catch (error) {
+    next(error);
+  }
+};

@@ -145,6 +145,7 @@ function DashQuestions() {
                     <Link
                       variant={theme === "dark" ? "info" : "outline-info"}
                       onClick={() => console.log("Edit", question._id)}
+                      to={`/update-question/${question._id}`}
                     >
                       <RiEdit2Fill
                         style={{ fontSize: "24px", marginTop: "0.6rem" }}
