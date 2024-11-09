@@ -71,3 +71,17 @@ export const getQuestions = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteQuestion = async (req, res, next) => {
+  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
+    return next(
+      errorHandler(403, "You are not allowed to delete this question")
+    );
+  }
+  try {
+    await Question.findByIdAndDelete(req.params.questionId);
+    res.status(200).json("The question has been deleted");
+  } catch (error) {
+    console.log(error.message);
+  }
+};

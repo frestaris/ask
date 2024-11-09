@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { RiEdit2Fill, RiDeleteBin7Fill } from "react-icons/ri";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { toast } from "react-toastify";
 
 function DashQuestions() {
   const { currentUser } = useSelector((state) => state.user);
   const [userQuestions, setUserQuestions] = useState([]);
   const { theme } = useSelector((state) => state.theme);
   const [showMore, setShowMore] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [questionIdToDelete, setQuestionIdToDelete] = useState("");
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -48,6 +52,27 @@ function DashQuestions() {
     }
   };
 
+  const handleDeleteQuestion = async () => {
+    setShowModal(false);
+    try {
+      const res = await fetch(
+        `/api/question/deletequestion/${questionIdToDelete}/${currentUser._id}`,
+        { method: "DELETE" }
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        setUserQuestions((prev) =>
+          prev.filter((question) => question._id !== questionIdToDelete)
+        );
+        toast.success(data.message || "Question deleted successfully!");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div
       className="table-responsive p-3"
@@ -61,7 +86,6 @@ function DashQuestions() {
           <Table
             striped
             bordered
-            hover
             responsive
             variant={theme === "dark" ? "dark" : "light"}
           >
@@ -104,8 +128,15 @@ function DashQuestions() {
                   <td>{question.category}</td>
                   <td className="text-center">
                     <Button
-                      variant={theme === "dark" ? "danger" : "outline-danger"}
-                      onClick={() => console.log("Delete", question._id)}
+                      variant="danger"
+                      onClick={() => {
+                        setShowModal(true);
+                        setQuestionIdToDelete(question._id);
+                      }}
+                      style={{
+                        backgroundColor: "transparent",
+                        color: "red",
+                      }}
                     >
                       <RiDeleteBin7Fill />
                     </Button>
@@ -115,7 +146,9 @@ function DashQuestions() {
                       variant={theme === "dark" ? "info" : "outline-info"}
                       onClick={() => console.log("Edit", question._id)}
                     >
-                      <RiEdit2Fill />
+                      <RiEdit2Fill
+                        style={{ fontSize: "24px", marginTop: "0.6rem" }}
+                      />
                     </Link>
                   </td>
                 </tr>
@@ -133,6 +166,36 @@ function DashQuestions() {
       ) : (
         <p>You have no questions yet!</p>
       )}
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        size="md"
+        centered
+      >
+        <Modal.Header closeButton />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle
+              className="mb-4"
+              style={{ fontSize: "5rem", color: "gray" }}
+            />
+            <h3 className="mb-5 fs-4 text-muted">
+              Are you sure you want to delete this question?
+            </h3>
+            <div className="d-flex justify-content-center gap-4">
+              <Button variant="danger" onClick={handleDeleteQuestion}>
+                Yes, I'm sure
+              </Button>
+              <Button
+                variant="outline-secondary"
+                onClick={() => setShowModal(false)}
+              >
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
