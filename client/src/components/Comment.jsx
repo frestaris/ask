@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { Image, Row, Col, Button } from "react-bootstrap";
+import { Image, Row, Col, Button, Form } from "react-bootstrap";
 import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-function Comment({ comment, onLike }) {
+function Comment({ comment, onLike, onEdit }) {
   const [user, setUser] = useState({});
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(comment.content);
 
   useEffect(() => {
     const getUser = async () => {
@@ -23,6 +26,29 @@ function Comment({ comment, onLike }) {
     };
     getUser();
   }, [comment]);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+    setEditedContent(comment.content);
+  };
+
+  const handleSave = async () => {
+    try {
+      const res = await fetch(`/api/comment/editComment/${comment._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: editedContent }),
+      });
+      if (res.ok) {
+        setIsEditing(false);
+        onEdit(comment, editedContent);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const isLikedByUser = currentUser && comment.likes.includes(currentUser._id);
 
@@ -51,26 +77,63 @@ function Comment({ comment, onLike }) {
           <span className="text-xs">{moment(comment.createdAt).fromNow()}</span>
         </Col>
       </Row>
-      <p className="mt-2">{comment.content}</p>
-      <div className="d-inline-flex align-items-center border-top mx-auto">
-        <Button
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-          }}
-          onClick={() => {
-            onLike(comment._id);
-          }}
-        >
-          <FaThumbsUp size="1em" color={iconColor} />
-        </Button>
-        <p className="mb-0">
-          {comment.numberOfLikes > 0 &&
-            `${comment.numberOfLikes} ${
-              comment.numberOfLikes === 1 ? "Like" : "Likes"
-            }`}
-        </p>
-      </div>
+      {isEditing ? (
+        <>
+          <Form.Control
+            as="textarea"
+            className="my-2"
+            value={editedContent}
+            onChange={(e) => setEditedContent(e.target.value)}
+          />
+          <div className="d-flex justify-content-end gap-2 text-xs">
+            <Button
+              type="button"
+              variant="warning"
+              size="sm"
+              onClick={handleSave}
+            >
+              Save
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline-secondary"
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </>
+      ) : (
+        <>
+          <p className="pb-2">{comment.content}</p>
+          <div className="d-inline-flex align-items-center border-top mx-auto">
+            <Button
+              style={{
+                backgroundColor: "transparent",
+                border: "none",
+              }}
+              onClick={() => {
+                onLike(comment._id);
+              }}
+            >
+              <FaThumbsUp className="mb-1" size="1em" color={iconColor} />
+            </Button>
+            <p className="mb-0">
+              {comment.numberOfLikes > 0 &&
+                `${comment.numberOfLikes} ${
+                  comment.numberOfLikes === 1 ? "Like" : "Likes"
+                }`}
+            </p>
+            {currentUser &&
+              (currentUser._id === comment.userId || currentUser.isAdmin) && (
+                <Button variant="link" size="sm" onClick={handleEdit}>
+                  Edit
+                </Button>
+              )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
