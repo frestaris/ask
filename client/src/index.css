@@ -23,6 +23,9 @@
   border-color: #555555;
 }
 
+.ql-editor{
+  font-size: 1.2rem;
+}
 .quill-dark .ql-toolbar {
   background-color: #333;
 }
@@ -46,3 +49,25 @@
 .quill-dark .ql-editor.ql-blank::before {
   color: white !important; /
 }
+
+.form-control:hover,
+.form-select:hover {
+  border-color: #ffc107; 
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25); 
+}
+
+.form-control:focus,
+.form-select:focus{
+  border-color: #ffc107 !important; 
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25) !important; 
+}
+
+
+
+.form-select option a:hover {
+  background-color: #ffc107;
+}
+.form-select option:checked {
+  background-color: #ffc107 !important;  
+}
+
