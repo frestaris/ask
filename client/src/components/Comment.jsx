@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
-import { Image, Row, Col, Stack } from "react-bootstrap";
+import { Image, Row, Col, Button } from "react-bootstrap";
+import { FaThumbsUp } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import moment from "moment";
 
-function Comment({ comment }) {
+function Comment({ comment, onLike }) {
   const [user, setUser] = useState({});
+  const { currentUser } = useSelector((state) => state.user);
+  const { theme } = useSelector((state) => state.theme);
 
   useEffect(() => {
     const getUser = async () => {
@@ -19,6 +23,14 @@ function Comment({ comment }) {
     };
     getUser();
   }, [comment]);
+
+  const isLikedByUser = currentUser && comment.likes.includes(currentUser._id);
+
+  const iconColor = isLikedByUser
+    ? "orange"
+    : theme === "light"
+    ? "black"
+    : "white";
 
   return (
     <div className="p-3 border-bottom">
@@ -40,6 +52,25 @@ function Comment({ comment }) {
         </Col>
       </Row>
       <p className="mt-2">{comment.content}</p>
+      <div className="d-inline-flex align-items-center border-top mx-auto">
+        <Button
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+          }}
+          onClick={() => {
+            onLike(comment._id);
+          }}
+        >
+          <FaThumbsUp size="1em" color={iconColor} />
+        </Button>
+        <p className="mb-0">
+          {comment.numberOfLikes > 0 &&
+            `${comment.numberOfLikes} ${
+              comment.numberOfLikes === 1 ? "Like" : "Likes"
+            }`}
+        </p>
+      </div>
     </div>
   );
 }
