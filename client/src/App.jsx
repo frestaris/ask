@@ -15,10 +15,13 @@ import CreateQuestion from "./pages/CreateQuestion";
 import UpdateQuestion from "./pages/UpdateQuestion";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import QuestionPage from "./pages/QuestionPage";
+import ScrollToTop from "./components/ScrollToTop";
+
 function App() {
   return (
     <BrowserRouter>
       <div className="d-flex flex-column min-vh-100">
+        <ScrollToTop />
         <SidebarProvider>
           <ToastContainer position="top-center" autoClose={2000} /> <Header />
           <main className="flex-grow-1">

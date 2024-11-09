@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Spinner, Container, Row, Col, Image } from "react-bootstrap";
+import CommentSection from "../components/CommentSection";
 
 function QuestionPage() {
   const { questionSlug } = useParams();
@@ -88,6 +89,7 @@ function QuestionPage() {
             className="question-content"
             dangerouslySetInnerHTML={{ __html: question && question.content }}
           ></div>
+          <CommentSection />
         </Col>
       </Row>
     </Container>

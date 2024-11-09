@@ -1,0 +1,93 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Button, Form, Alert, Col, Row, Image } from "react-bootstrap";
+import { useState } from "react";
+
+function CommentSection({ postId }) {
+  const { currentUser } = useSelector((state) => state.user);
+  const [comment, setComment] = useState("");
+  const [commentError, setCommentError] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (comment.length > 200) return;
+    try {
+      const res = await fetch("/api/comment/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: comment,
+          postId,
+          userId: currentUser._id,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setComment("");
+        setCommentError(null);
+      }
+    } catch (error) {
+      setCommentError(error.message);
+    }
+  };
+
+  return (
+    <div className="py-3">
+      {currentUser ? (
+        <div className="d-flex align-items-center  my-3 text-sm">
+          <p className="mb-0">Signed in as:</p>
+          <Image
+            src={currentUser.profilePicture}
+            alt={currentUser.username}
+            roundedCircle
+            width={25}
+            height={25}
+            className="mx-1"
+          />
+          <Link to="/dashboard?tab=profile" className="text-decoration-none">
+            @{currentUser.username}
+          </Link>
+        </div>
+      ) : (
+        <div className="text-sm text-info my-3">
+          You must be signed in to comment.{" "}
+          <Link to="/sign-in" className="text-primary">
+            Sign in
+          </Link>
+        </div>
+      )}
+      {currentUser && (
+        <Form
+          onSubmit={handleSubmit}
+          className="border border-warning rounded p-3"
+        >
+          <Form.Group controlId="commentTextarea">
+            <Form.Control
+              as="textarea"
+              placeholder="Add a comment..."
+              rows="3"
+              maxLength="200"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </Form.Group>
+          <Row className="mt-3">
+            <Col className="d-flex justify-content-between">
+              <p>{200 - comment.length} characters remaining</p>
+              <Button variant="outline-warning" type="submit">
+                Submit
+              </Button>
+            </Col>
+          </Row>
+          {commentError && (
+            <Alert variant="danger" className="mt-3">
+              {commentError}
+            </Alert>
+          )}
+        </Form>
+      )}
+    </div>
+  );
+}
+
+export default CommentSection;
