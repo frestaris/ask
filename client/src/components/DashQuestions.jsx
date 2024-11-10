@@ -119,10 +119,7 @@ function DashQuestions() {
                     />
                   </td>
                   <td>
-                    <Link
-                      className={theme === "dark" ? "text-white" : "text-dark"}
-                      to={`/question/${question.slug}`}
-                    >
+                    <Link to={`/question/${question.slug}`}>
                       {question.title}
                     </Link>
                   </td>

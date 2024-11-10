@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { HiArrowSmRight, HiUser, HiOutlineUserGroup } from "react-icons/hi";
+import {
+  HiArrowSmRight,
+  HiUser,
+  HiOutlineUserGroup,
+  HiAnnotation,
+} from "react-icons/hi";
 import { RiQuestionAnswerFill } from "react-icons/ri";
 import { ListGroup } from "react-bootstrap";
 import { useSidebar } from "../contexts/SidebarContext";
@@ -104,6 +109,22 @@ function DashSidebar() {
             >
               <HiOutlineUserGroup className="me-2" />
               Users
+            </ListGroup.Item>
+          </Link>
+        )}
+        {currentUser.isAdmin && (
+          <Link to="/dashboard?tab=comments" className="text-decoration-none">
+            <ListGroup.Item
+              action
+              active={tab === "comments"}
+              className={`d-flex align-items-center border-0 rounded-3 mb-2 hover-item ${ItemClass}`}
+              style={{
+                backgroundColor: theme === "dark" ? "#444" : "",
+                color: theme === "dark" ? "#fff" : "",
+              }}
+            >
+              <HiAnnotation className="me-2" />
+              Comments
             </ListGroup.Item>
           </Link>
         )}

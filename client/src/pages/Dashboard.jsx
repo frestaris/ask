@@ -7,6 +7,7 @@ import { Offcanvas } from "react-bootstrap";
 import { useSidebar } from "../contexts/SidebarContext";
 import { useSelector } from "react-redux";
 import DashUsers from "../components/DashUsers";
+import DashComments from "../components/DashComments";
 
 function Dashboard() {
   const { theme } = useSelector((state) => state.theme);
@@ -71,6 +72,8 @@ function Dashboard() {
         {tab === "questions" && <DashQuestions />}
         {/* Users */}
         {tab === "users" && <DashUsers />}
+        {/* Comments */}
+        {tab === "comments" && <DashComments />}
       </div>
     </div>
   );

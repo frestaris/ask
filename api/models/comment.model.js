@@ -3,7 +3,8 @@ const commentSchema = new mongoose.Schema(
   {
     content: { type: String, required: true },
     questionId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Question",
       required: true,
     },
     userId: {
