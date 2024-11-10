@@ -8,6 +8,7 @@ import { useSidebar } from "../contexts/SidebarContext";
 import { useSelector } from "react-redux";
 import DashUsers from "../components/DashUsers";
 import DashComments from "../components/DashComments";
+import DashboardComp from "../components/DashboardComp";
 
 function Dashboard() {
   const { theme } = useSelector((state) => state.theme);
@@ -66,6 +67,8 @@ function Dashboard() {
         </div>
       )}
       <div className="flex-grow-1 p-3">
+        {/* Dashboard */}
+        {tab === "dash" && <DashboardComp />}
         {/* Profile */}
         {tab === "profile" && <DashProfile />}
         {/* Questions */}

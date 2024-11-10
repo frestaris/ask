@@ -5,6 +5,7 @@ import {
   HiUser,
   HiOutlineUserGroup,
   HiAnnotation,
+  HiChartPie,
 } from "react-icons/hi";
 import { RiQuestionAnswerFill } from "react-icons/ri";
 import { ListGroup } from "react-bootstrap";
@@ -55,6 +56,22 @@ function DashSidebar() {
       }`}
     >
       <ListGroup variant="flush">
+        {currentUser.isAdmin && (
+          <Link to="/dashboard?tab=dash" className="text-decoration-none">
+            <ListGroup.Item
+              action
+              active={tab === "dash"}
+              className={`d-flex align-items-center border-0 rounded-3 mb-2 hover-item ${ItemClass}`}
+              style={{
+                backgroundColor: theme === "dark" ? "#444" : "",
+                color: theme === "dark" ? "#fff" : "",
+              }}
+            >
+              <HiChartPie className="me-2" />
+              Dashboard
+            </ListGroup.Item>
+          </Link>
+        )}
         <Link
           to="/dashboard?tab=profile"
           className="text-decoration-none"

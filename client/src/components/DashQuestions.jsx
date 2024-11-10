@@ -38,7 +38,7 @@ function DashQuestions() {
     const startIndex = userQuestions.length;
     try {
       const res = await fetch(
-        `/api/question/getquestions?userId=${currentUser._id}&startIndex=${startIndex}`
+        `/api/question/getquestions?startIndex=${startIndex}`
       );
       const data = await res.json();
       console.log(data);
