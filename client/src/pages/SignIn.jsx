@@ -63,28 +63,19 @@ function SignIn() {
       }`}
     >
       <div className="container-sm d-flex mt-5 p-3 flex-column flex-md-row align-items-center gap-4">
-        <div className="flex-grow-1 col-12 col-md-6">
-          <Link
-            to="/"
-            className="fw-bold text-dark display-4 text-decoration-none"
+        <div className="flex-grow-1 col-12 col-md-6 fs-1">
+          <span
+            className="px-2 py-1 text-white rounded fw-bold text-dark  text-decoration-none"
+            style={{
+              background: "linear-gradient(to right, #f97316, #000)",
+              display: "inline-block",
+            }}
           >
-            <span
-              className="px-2 py-1 text-white rounded"
-              style={{
-                background: "linear-gradient(to right, #f97316, #000)",
-                display: "inline-block",
-              }}
-            >
-              Ask
-            </span>
-          </Link>
-          <p className="small mt-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque saepe
-            obcaecati, ut quis magni sit. Dolores dicta nobis odio. Ex
-            consectetur similique quasi id nihil ea perspiciatis tempore
-            doloremque eum.
-          </p>
+            ASK
+          </span>
+          <span>Anything, Anytime</span>
         </div>
+
         <div className="flex-grow-1 col-12 col-md-6">
           <form className="d-flex flex-column gap-3" onSubmit={handleSubmit}>
             <Form.Group className="mb-3">

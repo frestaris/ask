@@ -50,8 +50,10 @@ function QuestionCard({ question, questionId }) {
         />
         <Card.Body className="d-flex flex-column justify-between p-3">
           <Card.Title className="fw-bold">{question.title}</Card.Title>
-          <Card.Subtitle className="text-center italic text-sm py-2">
-            {question.category}
+          <Card.Subtitle className="text-center">
+            <span className="badge rounded-pill bg-secondary">
+              {question && question.category}
+            </span>
           </Card.Subtitle>
           <hr />
           <Card.Text className="text-truncate">
@@ -68,7 +70,7 @@ function QuestionCard({ question, questionId }) {
                   style={{
                     padding: "0.2rem 0.4rem",
                     borderRadius: "50%",
-                    backgroundColor: "gray",
+                    backgroundColor: "#17a2b8",
                     position: "absolute",
                     top: "-10px",
                     right: "-10px",

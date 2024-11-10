@@ -20,6 +20,8 @@ import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
+import categories from "../categories";
+
 function CreateQuestion() {
   const { theme } = useSelector((state) => state.theme);
   const [file, setFile] = useState(null);
@@ -119,9 +121,11 @@ function CreateQuestion() {
                 }
               >
                 <option value="uncategorized">Select a category</option>
-                <option value="category 1">category 1</option>
-                <option value="category 2">category 2</option>
-                <option value="category 3">category 3</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
               </Form.Select>
             </Form.Group>
           </Col>

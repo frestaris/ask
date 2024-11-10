@@ -64,18 +64,14 @@ function QuestionPage() {
     <Container as="main" className="py-3">
       <Row className="justify-content-center">
         <Col md={10} lg={8}>
-          <h1 className="display-4 text-center mb-4">
+          <h1 className="display-4 text-center mb-4 fw-bold">
             {question && question.title}
           </h1>
-          <Link to={`/search?category=${question && question.category}`}>
-            <Button
-              variant="secondary"
-              size="sm"
-              className="d-block mx-auto mb-3"
-            >
+          <span className="d-block mb-3 text-center">
+            <span className="badge rounded-pill bg-secondary">
               {question && question.category}
-            </Button>
-          </Link>
+            </span>
+          </span>
           <img
             src={question && question.image}
             alt={question && question.title}

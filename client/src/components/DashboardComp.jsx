@@ -158,10 +158,10 @@ function DashboardComp() {
         </Col>
       </Row>
 
-      <Row className="py-3 justify-center">
+      <Row className="py-3 justify-center ">
         <Col md={6} sm={12} className="mb-4 px-3">
           <Card
-            className="shadow-md"
+            className="shadow-md border"
             bg={theme === "dark" ? "dark" : "light"}
             text={theme === "dark" ? "white" : "dark"}
           >
@@ -215,7 +215,7 @@ function DashboardComp() {
 
         <Col md={6} sm={12} className="mb-4 px-3">
           <Card
-            className="shadow-md"
+            className="shadow-md border"
             bg={theme === "dark" ? "dark" : "light"}
             text={theme === "dark" ? "white" : "dark"}
           >
@@ -258,7 +258,7 @@ function DashboardComp() {
 
         <Col md={12} sm={12} className="mb-4 px-3">
           <Card
-            className="shadow-md"
+            className="shadow-md border"
             bg={theme === "dark" ? "dark" : "light"}
             text={theme === "dark" ? "white" : "dark"}
           >
