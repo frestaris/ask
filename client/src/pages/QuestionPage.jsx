@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Spinner, Container, Row, Col, Image } from "react-bootstrap";
 import CommentSection from "../components/CommentSection";
+import QuestionCard from "../components/QuestionCard";
 
 function QuestionPage() {
   const { questionSlug } = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [question, setQuestion] = useState(null);
+  const [recentQuestions, setRecentQuestions] = useState(null);
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -35,6 +37,21 @@ function QuestionPage() {
     };
     fetchQuestion();
   }, [questionSlug]);
+
+  useEffect(() => {
+    try {
+      const fetchRecentQuestions = async () => {
+        const res = await fetch(`/api/question/getquestions?limit=2`);
+        const data = await res.json();
+        if (res.ok) {
+          setRecentQuestions(data.questions);
+        }
+      };
+      fetchRecentQuestions();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, []);
 
   if (loading)
     return (
@@ -90,6 +107,15 @@ function QuestionPage() {
             dangerouslySetInnerHTML={{ __html: question && question.content }}
           ></div>
           <CommentSection questionId={question._id} />
+          <h3 className="mt-5 text-center">Recent questions</h3>
+          <Row className="g-4 mt-5 justify-content-center">
+            {recentQuestions &&
+              recentQuestions.map((question) => (
+                <Col key={question._id} xs={12} sm={6} md={6} lg={6}>
+                  <QuestionCard question={question} questionId={question._id} />
+                </Col>
+              ))}
+          </Row>
         </Col>
       </Row>
     </Container>
