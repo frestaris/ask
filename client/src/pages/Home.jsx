@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Dropdown } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Dropdown,
+  Form,
+  InputGroup,
+} from "react-bootstrap";
 import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 import categories from "../categories";
 import QuestionCard from "../components/QuestionCard";
+import { AiOutlineSearch } from "react-icons/ai";
 
 function Home() {
   const [questions, setQuestions] = useState([]);
@@ -12,7 +21,8 @@ function Home() {
   const [viewMode, setViewMode] = useState("grid");
   const [sortOption, setSortOption] = useState("latest");
   const [selectedCategory, setSelectedCategory] = useState([]);
-
+  const [query, setQuery] = useState("");
+  const [allQuestions, setAllQuestions] = useState([]);
   const sortOptions = [
     { label: "Latest", value: "latest" },
     { label: "Oldest", value: "oldest" },
@@ -26,6 +36,7 @@ function Home() {
         const res = await fetch("/api/question/getquestions?limit=8");
         const data = await res.json();
         if (res.ok) {
+          setAllQuestions(data.questions);
           setQuestions(data.questions);
           if (data.questions.length < 8) {
             setShowMore(false);
@@ -51,6 +62,7 @@ function Home() {
       );
       const data = await res.json();
       if (res.ok && data.questions && data.questions.length > 0) {
+        setAllQuestions((prev) => [...prev, ...data.questions]);
         setQuestions((prev) => [...prev, ...data.questions]);
         if (data.questions.length < 8) {
           setShowMore(false);
@@ -154,22 +166,48 @@ function Home() {
     return <div>Loading...</div>;
   }
 
+  const handleSearch = (e) => {
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+    if (newQuery.length >= 2) {
+      const filteredQuestions = allQuestions.filter((post) =>
+        post.title.toLowerCase().includes(newQuery.toLowerCase())
+      );
+      setQuestions(filteredQuestions);
+    } else {
+      setQuestions(allQuestions);
+    }
+  };
+
   return (
-    <div>
-      <Container className="my-5">
-        <Row className="mb-4">
-          <Col lg={6} md={6}>
-            <h1 className="display-4 text-warning fw-bold">Ask!</h1>
-            <p className="fs-5">
-              Welcome to a community where curiosity thrives! Whether you're
-              looking for answers or eager to share your knowledge, ASK connects
-              people through insightful questions and discussions. Discover,
-              learn, and engage with others, all in one place.
-            </p>
-          </Col>
-        </Row>
-        <hr />
-        <div className="d-flex justify-content-end mb-3 gap-2">
+    <Container className="my-5">
+      <Row className="mb-4">
+        <Col lg={6} md={6}>
+          <h1 className="display-4 text-warning fw-bold">Ask!</h1>
+          <p className="fs-5">
+            Welcome to a community where curiosity thrives! Whether you're
+            looking for answers or eager to share your knowledge, ASK connects
+            people through insightful questions and discussions. Discover,
+            learn, and engage with others, all in one place.
+          </p>
+        </Col>
+      </Row>
+      <hr />
+      <div className="d-flex flex-column flex-sm-row justify-content-between mb-3 gap-2">
+        <Form className="w-100">
+          <InputGroup>
+            <Form.Control
+              type="text"
+              value={query}
+              onChange={handleSearch}
+              placeholder="Search..."
+            />
+            <InputGroup.Text>
+              <AiOutlineSearch />
+            </InputGroup.Text>
+          </InputGroup>
+        </Form>
+        <div className="d-flex gap-2 justify-content-end">
           <Dropdown>
             <Dropdown.Toggle variant="outline-secondary">
               Categories
@@ -208,7 +246,7 @@ function Home() {
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
-          </Dropdown>{" "}
+          </Dropdown>
           <Button variant="outline-secondary" onClick={toggleViewMode}>
             {viewMode === "grid" ? (
               <CiGrid41 size={24} />
@@ -217,32 +255,32 @@ function Home() {
             )}
           </Button>
         </div>
-        <Row className={`gy-4 ${viewMode === "grid" ? "" : "flex-column"}`}>
-          {filterByCategory().map((question) => (
-            <Col
-              key={question._id}
-              xs={12}
-              sm={viewMode === "grid" ? 6 : 12}
-              md={viewMode === "grid" ? 4 : 12}
-              lg={viewMode === "grid" ? 3 : 12}
-            >
-              <QuestionCard
-                question={question}
-                questionId={question._id}
-                comments={comments[question._id] || []}
-              />
-            </Col>
-          ))}
-        </Row>
-        {showMore && (
-          <div className="text-center mt-5">
-            <Button variant="outline-warning" onClick={handleShowMore}>
-              Show More
-            </Button>
-          </div>
-        )}
-      </Container>
-    </div>
+      </div>
+      <Row className={`gy-4 ${viewMode === "grid" ? "" : "flex-column"}`}>
+        {filterByCategory().map((question) => (
+          <Col
+            key={question._id}
+            xs={viewMode === "grid" ? 6 : 12}
+            sm={viewMode === "grid" ? 6 : 12}
+            md={viewMode === "grid" ? 4 : 12}
+            lg={viewMode === "grid" ? 3 : 12}
+          >
+            <QuestionCard
+              question={question}
+              questionId={question._id}
+              comments={comments[question._id] || []}
+            />
+          </Col>
+        ))}
+      </Row>
+      {showMore && (
+        <div className="text-center mt-5">
+          <Button variant="outline-warning" onClick={handleShowMore}>
+            Show More
+          </Button>
+        </div>
+      )}
+    </Container>
   );
 }
 

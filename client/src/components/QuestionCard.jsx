@@ -65,7 +65,14 @@ function QuestionCard({ question, questionId }) {
                 className="bg-transparent position-relative mt-3"
                 style={{ padding: 0, margin: 0 }}
               >
-                <FaCommentAlt className="me-1" color="orange" size="1.2rem" />
+                <FaCommentAlt
+                  className="me-1"
+                  style={{
+                    color: theme === "dark" ? "white" : "gray",
+                  }}
+                  size="1.2rem"
+                />
+
                 <span
                   style={{
                     padding: "0.2rem 0.4rem",
@@ -80,7 +87,13 @@ function QuestionCard({ question, questionId }) {
                 </span>
               </Badge>
             ) : (
-              <FaCommentAlt className="me-1" color="orange" size="1.2rem" />
+              <FaCommentAlt
+                className="me-1"
+                style={{
+                  color: theme === "dark" ? "white" : "gray",
+                }}
+                size="1.2rem"
+              />
             )}
           </div>
         </Card.Body>

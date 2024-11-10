@@ -73,7 +73,10 @@ function DashboardComp() {
   }, [currentUser]);
 
   return (
-    <div className="pb-2" style={{ maxHeight: "680px", overflowY: "auto" }}>
+    <div
+      className="pb-2"
+      style={{ maxHeight: "680px", overflowY: "auto", overflowX: "hidden" }}
+    >
       <Row className="flex-wrap gap-4 justify-content-center">
         <Col
           lg={3}
@@ -158,8 +161,8 @@ function DashboardComp() {
         </Col>
       </Row>
 
-      <Row className="py-3 justify-center ">
-        <Col md={6} sm={12} className="mb-4 px-3">
+      <Row className="justify-content-center">
+        <Col md={6} sm={12} className="mb-4 ">
           <Card
             className="shadow-md border"
             bg={theme === "dark" ? "dark" : "light"}
@@ -200,7 +203,7 @@ function DashboardComp() {
                           style={{
                             width: "40px",
                             height: "40px",
-                            borderRadius: "50%",
+                            borderRadius: "60%",
                             objectFit: "cover",
                           }}
                         />
@@ -212,8 +215,7 @@ function DashboardComp() {
             </Table>
           </Card>
         </Col>
-
-        <Col md={6} sm={12} className="mb-4 px-3">
+        <Col md={5} sm={12} className="mb-4">
           <Card
             className="shadow-md border"
             bg={theme === "dark" ? "dark" : "light"}
@@ -247,7 +249,7 @@ function DashboardComp() {
                 {comments &&
                   comments.map((comment) => (
                     <tr key={comment._id}>
-                      <td className="w-50">{comment.content}</td>
+                      <td>{comment.content}</td>
                       <td>{comment.numberOfLikes}</td>
                     </tr>
                   ))}
@@ -255,8 +257,7 @@ function DashboardComp() {
             </Table>
           </Card>
         </Col>
-
-        <Col md={12} sm={12} className="mb-4 px-3">
+        <Col md={11} sm={11} className="mb-4">
           <Card
             className="shadow-md border"
             bg={theme === "dark" ? "dark" : "light"}
