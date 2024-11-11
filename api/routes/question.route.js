@@ -5,6 +5,7 @@ import {
   getQuestions,
   deleteQuestion,
   updateQuestion,
+  getUserQuestions,
 } from "../controllers/question.controller.js";
 
 const router = express.Router();
@@ -17,5 +18,6 @@ router.delete(
   deleteQuestion
 );
 router.put("/updatequestion/:questionId/:userId", verifyToken, updateQuestion);
+router.get("/currentuser/:userId", verifyToken, getUserQuestions);
 
 export default router;

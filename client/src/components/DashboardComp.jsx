@@ -6,7 +6,7 @@ import {
   HiDocumentText,
   HiOutlineUserGroup,
 } from "react-icons/hi";
-import { Button, Table, Card, Row, Col } from "react-bootstrap";
+import { Button, Table, Card, Row, Col, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function DashboardComp() {
@@ -21,6 +21,7 @@ function DashboardComp() {
   const [lastMonthComments, setLastMonthComments] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -66,101 +67,113 @@ function DashboardComp() {
     };
 
     if (currentUser.isAdmin) {
+      setLoading(true);
       fetchUsers();
       fetchQuestions();
       fetchComments();
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    if (users.length && comments.length && questions.length) {
+      setLoading(false);
+    }
+  }, [users, comments, questions]);
+
   return (
     <div
       className="pb-2"
       style={{ maxHeight: "680px", overflowY: "auto", overflowX: "hidden" }}
     >
-      <Row className="flex-wrap gap-4 justify-content-center">
-        <Col
-          lg={3}
-          md={5}
-          sm={5}
-          className="p-3 mb-4 border rounded"
-          style={{
-            backgroundColor: theme === "dark" ? "#333333" : "#f8f9fa",
-            color: theme === "dark" ? "#fff" : "#000",
-            maxHeight: "680px",
-            overflowY: "auto",
-          }}
-        >
-          <div className="d-flex justify-content-between align-items-center">
-            <h6>Total Users</h6>
-            <span className="bg-primary rounded-circle p-2">
-              <HiOutlineUserGroup size="2rem" style={{ color: "#fff" }} />
-            </span>
-          </div>
-          <p className="h4">{totalUsers}</p>
-          <div className="d-flex gap-2 text-sm">
-            <span className="text-success">
-              {lastMonthUsers > 0 && <HiArrowNarrowUp />}
-              {lastMonthUsers}
-            </span>
-            <div>Last Month</div>
-          </div>
-        </Col>
-        <Col
-          lg={3}
-          md={5}
-          sm={5}
-          className="p-3 mb-4 border rounded"
-          style={{
-            backgroundColor: theme === "dark" ? "#333333" : "#f8f9fa",
-            color: theme === "dark" ? "#fff" : "#000",
-            maxHeight: "680px",
-            overflowY: "auto",
-          }}
-        >
-          <div className="d-flex justify-content-between align-items-center">
-            <h6>Total Comments</h6>
-            <span className="bg-info rounded-circle p-2">
-              <HiAnnotation size="2rem" style={{ color: "#fff" }} />
-            </span>
-          </div>
-          <p className="h4">{totalComments}</p>
-          <div className="d-flex gap-2 text-sm">
-            <span className="text-success">
-              {lastMonthComments > 0 && <HiArrowNarrowUp />}
-              {lastMonthComments}
-            </span>
-            <div>Last Month</div>
-          </div>
-        </Col>
-        <Col
-          lg={3}
-          md={5}
-          sm={12}
-          className="p-3 mb-4 border rounded"
-          style={{
-            backgroundColor: theme === "dark" ? "#333333" : "#f8f9fa",
-            color: theme === "dark" ? "#fff" : "#000",
-            maxHeight: "680px",
-            overflowY: "auto",
-          }}
-        >
-          <div className="d-flex justify-content-between align-items-center">
-            <h6>Total Questions</h6>
-            <span className="bg-success rounded-circle p-2">
-              <HiDocumentText size="2rem" style={{ color: "#fff" }} />
-            </span>
-          </div>
-          <p className="h4">{totalQuestions}</p>
-          <div className="d-flex gap-2 text-sm">
-            <span className="text-success">
-              {lastMonthQuestions > 0 && <HiArrowNarrowUp />}
-              {lastMonthQuestions}
-            </span>
-            <div>Last Month</div>
-          </div>
-        </Col>
-      </Row>
-
+      {loading ? (
+        <div className="text-center">
+          <Spinner animation="border" variant="secondary" />
+        </div>
+      ) : (
+        <Row className="flex-wrap gap-4 justify-content-center">
+          <Col
+            lg={3}
+            md={5}
+            sm={5}
+            className="p-3 mb-4 border rounded"
+            style={{
+              backgroundColor: theme === "dark" ? "#333333" : "#f8f9fa",
+              color: theme === "dark" ? "#fff" : "#000",
+              maxHeight: "680px",
+              overflowY: "auto",
+            }}
+          >
+            <div className="d-flex justify-content-between align-items-center">
+              <h6>Total Users</h6>
+              <span className="bg-primary rounded-circle p-2">
+                <HiOutlineUserGroup size="2rem" style={{ color: "#fff" }} />
+              </span>
+            </div>
+            <p className="h4">{totalUsers}</p>
+            <div className="d-flex gap-2 text-sm">
+              <span className="text-success">
+                {lastMonthUsers > 0 && <HiArrowNarrowUp />}
+                {lastMonthUsers}
+              </span>
+              <div>Last Month</div>
+            </div>
+          </Col>
+          <Col
+            lg={3}
+            md={5}
+            sm={5}
+            className="p-3 mb-4 border rounded"
+            style={{
+              backgroundColor: theme === "dark" ? "#333333" : "#f8f9fa",
+              color: theme === "dark" ? "#fff" : "#000",
+              maxHeight: "680px",
+              overflowY: "auto",
+            }}
+          >
+            <div className="d-flex justify-content-between align-items-center">
+              <h6>Total Comments</h6>
+              <span className="bg-info rounded-circle p-2">
+                <HiAnnotation size="2rem" style={{ color: "#fff" }} />
+              </span>
+            </div>
+            <p className="h4">{totalComments}</p>
+            <div className="d-flex gap-2 text-sm">
+              <span className="text-success">
+                {lastMonthComments > 0 && <HiArrowNarrowUp />}
+                {lastMonthComments}
+              </span>
+              <div>Last Month</div>
+            </div>
+          </Col>
+          <Col
+            lg={3}
+            md={5}
+            sm={12}
+            className="p-3 mb-4 border rounded"
+            style={{
+              backgroundColor: theme === "dark" ? "#333333" : "#f8f9fa",
+              color: theme === "dark" ? "#fff" : "#000",
+              maxHeight: "680px",
+              overflowY: "auto",
+            }}
+          >
+            <div className="d-flex justify-content-between align-items-center">
+              <h6>Total Questions</h6>
+              <span className="bg-success rounded-circle p-2">
+                <HiDocumentText size="2rem" style={{ color: "#fff" }} />
+              </span>
+            </div>
+            <p className="h4">{totalQuestions}</p>
+            <div className="d-flex gap-2 text-sm">
+              <span className="text-success">
+                {lastMonthQuestions > 0 && <HiArrowNarrowUp />}
+                {lastMonthQuestions}
+              </span>
+              <div>Last Month</div>
+            </div>
+          </Col>
+        </Row>
+      )}
       <Row className="justify-content-center">
         <Col md={6} sm={12} className="mb-4 ">
           <Card

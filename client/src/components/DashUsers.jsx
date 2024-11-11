@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Table, Button, Modal } from "react-bootstrap";
+import { Table, Button, Modal, Spinner } from "react-bootstrap";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { toast } from "react-toastify";
@@ -12,9 +12,11 @@ function DashUsers() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
+      setLoading(true);
       try {
         const res = await fetch(`/api/user/getusers`);
         const data = await res.json();
@@ -26,6 +28,8 @@ function DashUsers() {
         }
       } catch (error) {
         console.log("Error fetching users:", error);
+      } finally {
+        setLoading(false);
       }
     };
     if (currentUser.isAdmin) fetchUsers();
@@ -33,6 +37,7 @@ function DashUsers() {
 
   const handleShowMore = async () => {
     const startIndex = users.length;
+    setLoading(true);
     try {
       const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
       const data = await res.json();
@@ -44,6 +49,8 @@ function DashUsers() {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,7 +75,11 @@ function DashUsers() {
 
   return (
     <div className="pb-2" style={{ maxHeight: "680px", overflowY: "auto" }}>
-      {currentUser.isAdmin && users.length > 0 ? (
+      {loading ? (
+        <div className="text-center">
+          <Spinner animation="border" variant="secondary" />
+        </div>
+      ) : currentUser.isAdmin && users.length > 0 ? (
         <>
           <Table
             striped

@@ -74,26 +74,35 @@ export const getQuestions = async (req, res, next) => {
 };
 
 export const deleteQuestion = async (req, res, next) => {
-  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
-    return next(
-      errorHandler(403, "You are not allowed to delete this question")
-    );
-  }
   try {
+    const question = await Question.findById(req.params.questionId);
+    if (!question) {
+      return next(errorHandler(404, "Question not found"));
+    }
+    if (question.userId.toString() !== req.user.id && !req.user.isAdmin) {
+      return next(
+        errorHandler(403, "You are not allowed to delete this question")
+      );
+    }
     await Question.findByIdAndDelete(req.params.questionId);
     res.status(200).json("The question has been deleted");
   } catch (error) {
     console.log(error.message);
+    next(error);
   }
 };
 
 export const updateQuestion = async (req, res, next) => {
-  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
-    return next(
-      errorHandler(403, "You are not allowed to update this question")
-    );
-  }
   try {
+    const question = await Question.findById(req.params.questionId);
+    if (!question) {
+      return next(errorHandler(404, "Question not found"));
+    }
+    if (question.userId.toString() !== req.user.id && !req.user.isAdmin) {
+      return next(
+        errorHandler(403, "You are not allowed to update this question")
+      );
+    }
     const updatedQuestion = await Question.findByIdAndUpdate(
       req.params.questionId,
       {
@@ -108,6 +117,20 @@ export const updateQuestion = async (req, res, next) => {
     );
     res.status(200).json(updatedQuestion);
   } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserQuestions = async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const questions = await Question.find({ userId })
+      .sort({ updatedAt: -1 })
+      .populate("userId", "username profilePicture");
+
+    res.status(200).json({ questions });
+  } catch (error) {
+    console.error("Error fetching user questions:", error);
     next(error);
   }
 };

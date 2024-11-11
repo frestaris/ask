@@ -95,9 +95,9 @@ const Header = () => {
                   </span>
                 </Dropdown.Header>
                 <Dropdown.Divider />
-                <Link to="/dashboard?tab=profile" className="dropdown-item">
+                <Dropdown.Item as={Link} to="/dashboard?tab=profile">
                   Profile
-                </Link>
+                </Dropdown.Item>
                 <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

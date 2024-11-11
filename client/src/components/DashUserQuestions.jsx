@@ -6,11 +6,10 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { toast } from "react-toastify";
 
-function DashQuestions() {
+function DashUserQuestions() {
   const { currentUser } = useSelector((state) => state.user);
   const [userQuestions, setUserQuestions] = useState([]);
   const { theme } = useSelector((state) => state.theme);
-  const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [questionIdToDelete, setQuestionIdToDelete] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,14 +18,11 @@ function DashQuestions() {
     const fetchQuestions = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/question/getquestions`);
+        const res = await fetch(`/api/question/currentuser/${currentUser._id}`);
         const data = await res.json();
 
         if (res.ok && data.questions) {
           setUserQuestions(data.questions);
-          if (data.questions.length < 9) {
-            setShowMore(false);
-          }
         }
       } catch (error) {
         console.log("Error fetching questions:", error);
@@ -34,31 +30,8 @@ function DashQuestions() {
         setLoading(false);
       }
     };
-
     fetchQuestions();
-  }, [currentUser._id, currentUser.isAdmin]);
-
-  const handleShowMore = async () => {
-    const startIndex = userQuestions.length;
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `/api/question/getquestions?startIndex=${startIndex}`
-      );
-      const data = await res.json();
-      console.log(data);
-      if (res.ok) {
-        setUserQuestions((prev) => [...prev, ...data.questions]);
-        if (data.questions.length < 9) {
-          setShowMore(false);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [currentUser]);
 
   const handleDeleteQuestion = async () => {
     setShowModal(false);
@@ -68,6 +41,7 @@ function DashQuestions() {
         { method: "DELETE" }
       );
       const data = await res.json();
+
       if (!res.ok) {
         console.log(data.message);
       } else {
@@ -77,7 +51,7 @@ function DashQuestions() {
         toast.success(data.message || "Question deleted successfully!");
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error);
     }
   };
 
@@ -95,7 +69,7 @@ function DashQuestions() {
         <div className="text-center">
           <Spinner animation="border" variant="secondary" />
         </div>
-      ) : currentUser.isAdmin && userQuestions.length > 0 ? (
+      ) : userQuestions.length > 0 ? (
         <>
           <Table
             striped
@@ -161,17 +135,11 @@ function DashQuestions() {
               ))}
             </tbody>
           </Table>
-          {showMore && (
-            <div className="text-center">
-              <Button variant="outline-warning" onClick={handleShowMore}>
-                Show More
-              </Button>
-            </div>
-          )}
         </>
       ) : (
         <p>You have no questions yet!</p>
       )}
+
       <Modal
         show={showModal}
         onHide={() => setShowModal(false)}
@@ -206,4 +174,4 @@ function DashQuestions() {
   );
 }
 
-export default DashQuestions;
+export default DashUserQuestions;

@@ -13,7 +13,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import { SidebarProvider } from "./contexts/SidebarContext";
 import CreateQuestion from "./pages/CreateQuestion";
 import UpdateQuestion from "./pages/UpdateQuestion";
-import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import QuestionPage from "./pages/QuestionPage";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -37,12 +36,10 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/create-question" element={<CreateQuestion />} />
               </Route>
-              <Route element={<OnlyAdminPrivateRoute />}>
-                <Route
-                  path="/update-question/:questionId"
-                  element={<UpdateQuestion />}
-                />
-              </Route>
+              <Route
+                path="/update-question/:questionId"
+                element={<UpdateQuestion />}
+              />
             </Routes>
           </main>
           <FooterCom />

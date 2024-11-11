@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import DashUsers from "../components/DashUsers";
 import DashComments from "../components/DashComments";
 import DashboardComp from "../components/DashboardComp";
+import DashUserQuestions from "../components/DashUserQuestions";
+import DashUserComments from "../components/DashUserComments";
 
 function Dashboard() {
   const { theme } = useSelector((state) => state.theme);
@@ -73,10 +75,12 @@ function Dashboard() {
         {tab === "profile" && <DashProfile />}
         {/* Questions */}
         {tab === "questions" && <DashQuestions />}
+        {tab === "user-questions" && <DashUserQuestions />}
         {/* Users */}
         {tab === "users" && <DashUsers />}
         {/* Comments */}
         {tab === "comments" && <DashComments />}
+        {tab === "user-comments" && <DashUserComments />}{" "}
       </div>
     </div>
   );

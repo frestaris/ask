@@ -127,3 +127,17 @@ export const getComments = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getUserComments = async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const comments = await Comment.find({ userId })
+      .sort({ updatedAt: -1 })
+      .populate("questionId");
+
+    res.status(200).json({ comments });
+  } catch (error) {
+    console.error("Error fetching user comments:", error);
+    next(error);
+  }
+};

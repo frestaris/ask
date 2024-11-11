@@ -49,7 +49,9 @@ function QuestionCard({ question, questionId }) {
           style={{ objectFit: "cover", height: "200px" }}
         />
         <Card.Body className="d-flex flex-column justify-between p-3">
-          <Card.Title className="fw-bold">{question.title}</Card.Title>
+          <Card.Title className="fw-bold text-truncate">
+            {question.title}
+          </Card.Title>
           <Card.Subtitle className="text-center">
             <span className="badge rounded-pill bg-secondary">
               {question && question.category}

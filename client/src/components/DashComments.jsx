@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Button, Modal, Table } from "react-bootstrap";
+import { Button, Modal, Table, Spinner } from "react-bootstrap";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -12,9 +12,11 @@ function DashComments() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [commentIdToDelete, setCommentIdToDelete] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchComments = async () => {
+      setLoading(true);
       try {
         const res = await fetch(`/api/comment/getcomments`);
         const data = await res.json();
@@ -26,6 +28,8 @@ function DashComments() {
         }
       } catch (error) {
         console.log("Error fetching comments:", error);
+      } finally {
+        setLoading(false);
       }
     };
     if (currentUser.isAdmin) fetchComments();
@@ -33,6 +37,7 @@ function DashComments() {
 
   const handleShowMore = async () => {
     const startIndex = comments.length;
+    setLoading(true);
     try {
       const res = await fetch(
         `/api/comment/getcomments?startIndex=${startIndex}`
@@ -46,6 +51,8 @@ function DashComments() {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,7 +81,11 @@ function DashComments() {
 
   return (
     <div className="pb-2" style={{ maxHeight: "680px", overflowY: "auto" }}>
-      {currentUser.isAdmin && comments.length > 0 ? (
+      {loading ? (
+        <div className="text-center">
+          <Spinner animation="border" variant="secondary" />
+        </div>
+      ) : currentUser.isAdmin && comments.length > 0 ? (
         <>
           <Table
             striped

@@ -113,6 +113,44 @@ function DashSidebar() {
             </ListGroup.Item>
           </Link>
         )}
+        {!currentUser?.isAdmin && (
+          <Link
+            to="/dashboard?tab=user-questions"
+            className="text-decoration-none"
+          >
+            <ListGroup.Item
+              action
+              active={tab === "user-questions"}
+              className={`d-flex align-items-center border-0 rounded-3 mb-2 hover-item ${ItemClass}`}
+              style={{
+                backgroundColor: theme === "dark" ? "#444" : "",
+                color: theme === "dark" ? "#fff" : "",
+              }}
+            >
+              <RiQuestionAnswerFill className="me-2" />
+              Questions
+            </ListGroup.Item>
+          </Link>
+        )}
+        {!currentUser?.isAdmin && (
+          <Link
+            to="/dashboard?tab=user-comments"
+            className="text-decoration-none"
+          >
+            <ListGroup.Item
+              action
+              active={tab === "user-comments"}
+              className={`d-flex align-items-center border-0 rounded-3 mb-2 hover-item ${ItemClass}`}
+              style={{
+                backgroundColor: theme === "dark" ? "#444" : "",
+                color: theme === "dark" ? "#fff" : "",
+              }}
+            >
+              <HiAnnotation className="me-2" />
+              Comments
+            </ListGroup.Item>
+          </Link>
+        )}
         {currentUser.isAdmin && (
           <Link to="/dashboard?tab=users" className="text-decoration-none">
             <ListGroup.Item
