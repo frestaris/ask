@@ -282,7 +282,6 @@ function Home() {
           </Col>
         ))}
       </Row>
-      )}
       {showMore && (
         <div className="text-center mt-5">
           <Button variant="outline-warning" onClick={handleShowMore}>
