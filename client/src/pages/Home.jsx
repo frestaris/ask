@@ -7,6 +7,7 @@ import {
   Dropdown,
   Form,
   InputGroup,
+  Spinner,
 } from "react-bootstrap";
 import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 import categories from "../categories";
@@ -15,7 +16,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 function Home() {
   const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState({});
   const [showMore, setShowMore] = useState(true);
   const [viewMode, setViewMode] = useState("grid");
@@ -32,6 +33,7 @@ function Home() {
 
   useEffect(() => {
     const fetchQuestions = async () => {
+      setLoading(true);
       try {
         const res = await fetch("/api/question/getquestions?limit=8");
         const data = await res.json();
@@ -56,6 +58,7 @@ function Home() {
 
   const handleShowMore = async () => {
     const startIndex = questions.length;
+    setLoading(true);
     try {
       const res = await fetch(
         `/api/question/getquestions?startIndex=${startIndex}&limit=8`
@@ -72,6 +75,8 @@ function Home() {
       }
     } catch (error) {
       console.log("Error fetching more questions:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -163,7 +168,11 @@ function Home() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-center mt-5">
+        <Spinner animation="border" variant="secondary" />
+      </div>
+    );
   }
 
   const handleSearch = (e) => {
@@ -273,6 +282,7 @@ function Home() {
           </Col>
         ))}
       </Row>
+      )}
       {showMore && (
         <div className="text-center mt-5">
           <Button variant="outline-warning" onClick={handleShowMore}>

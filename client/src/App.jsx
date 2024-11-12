@@ -35,11 +35,11 @@ function App() {
               <Route element={<PrivateRoute />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/create-question" element={<CreateQuestion />} />
+                <Route
+                  path="/update-question/:questionId"
+                  element={<UpdateQuestion />}
+                />
               </Route>
-              <Route
-                path="/update-question/:questionId"
-                element={<UpdateQuestion />}
-              />
             </Routes>
           </main>
           <FooterCom />
