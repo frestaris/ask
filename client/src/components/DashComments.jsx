@@ -110,9 +110,13 @@ function DashComments() {
                   <td>{comment.content}</td>
                   <td>{comment.numberOfLikes}</td>
                   <td>
-                    <Link to={`/question/${comment.questionId.slug}`}>
-                      {comment.questionId.slug}
-                    </Link>
+                    {comment.questionId ? (
+                      <Link to={`/question/${comment.questionId.slug}`}>
+                        {comment.questionId.slug}
+                      </Link>
+                    ) : (
+                      <span>Unavailable</span>
+                    )}
                   </td>
                   <td>{comment.userId}</td>
                   <td className="text-center">

@@ -33,26 +33,22 @@ function UpdateQuestion() {
   const { questionId } = useParams();
 
   useEffect(() => {
-    try {
-      const fetchQuestion = async () => {
-        const res = await fetch(
-          `/api/question/getquestions?questionId=${questionId}`
-        );
-        const data = await res.json();
-        if (!res.ok) {
-          console.log(data.message);
-          setPublishError(data.message);
-          return;
-        }
-        if (res.ok) {
-          setPublishError(null);
-          setFormData(data.questions[0]);
-        }
-      };
-      fetchQuestion();
-    } catch (error) {
-      console.log(error.message);
-    }
+    const fetchQuestion = async () => {
+      const res = await fetch(
+        `/api/question/getquestions?questionId=${questionId}`
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+        setPublishError(data.message);
+        return;
+      }
+      if (res.ok) {
+        setPublishError(null);
+        setFormData(data.questions[0]);
+      }
+    };
+    fetchQuestion();
   }, [questionId]);
 
   const handleUploadImage = async () => {
@@ -101,7 +97,7 @@ function UpdateQuestion() {
     }
     try {
       const res = await fetch(
-        `/api/question/updatequestion/${questionId}/${currentUser._id}`,
+        `/api/question/updatequestion/${formData._id}/${currentUser._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -150,9 +146,14 @@ function UpdateQuestion() {
                 value={formData.category}
               >
                 <option value="uncategorized">Select a category</option>
-                <option value="category 1">category 1</option>
-                <option value="category 2">category 2</option>
-                <option value="category 3">category 3</option>
+                <option value="Technology">Technology</option>
+                <option value="Science">Science</option>
+                <option value="Health">Health</option>
+                <option value="Education">Education</option>
+                <option value="Finance">Finance</option>
+                <option value="Sports">Sports</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Lifestyle">Lifestyle</option>
               </Form.Select>
             </Form.Group>
           </Col>

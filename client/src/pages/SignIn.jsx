@@ -89,7 +89,7 @@ function SignIn() {
                   value={formData.email}
                 />
                 <InputGroup.Text id="basic-addon2">
-                  @example.com
+                  admin/test @gmail.com
                 </InputGroup.Text>
               </InputGroup>
             </Form.Group>

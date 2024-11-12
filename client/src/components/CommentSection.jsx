@@ -21,12 +21,14 @@ function CommentSection({ questionId }) {
         console.error("Question ID is undefined");
         return;
       }
+      console.log("Fetching comments for question ID:", questionId);
       try {
         const res = await fetch(
           `/api/comment/getQuestionComments/${questionId}`
         );
         if (res.ok) {
           const data = await res.json();
+          console.log("Fetched comments:", data);
           setComments(data);
         }
       } catch (error) {
