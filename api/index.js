@@ -7,6 +7,7 @@ import questionRoutes from "./routes/question.route.js";
 import cookieParser from "cookie-parser";
 import commentRoutes from "./routes/comment.route.js";
 import path from "path";
+import cors from "cors";
 
 dotenv.config();
 
@@ -57,6 +58,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });
