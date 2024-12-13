@@ -8,6 +8,7 @@ import {
 } from "react-icons/hi";
 import { Button, Table, Card, Row, Col, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function DashboardComp() {
   const [users, setUsers] = useState([]);
@@ -26,7 +27,7 @@ function DashboardComp() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch(`api/user/getusers?limit=5`);
+        const res = await fetch(`${getBaseUrl()}api/user/getusers?limit=5`);
         const data = await res.json();
         if (res.ok) {
           setUsers(data.users);
@@ -40,7 +41,9 @@ function DashboardComp() {
 
     const fetchQuestions = async () => {
       try {
-        const res = await fetch(`api/question/getquestions?limit=5`);
+        const res = await fetch(
+          `${getBaseUrl()}api/question/getquestions?limit=5`
+        );
         const data = await res.json();
         if (res.ok) {
           setQuestions(data.questions);
@@ -54,7 +57,9 @@ function DashboardComp() {
 
     const fetchComments = async () => {
       try {
-        const res = await fetch(`api/comment/getcomments?limit=5`);
+        const res = await fetch(
+          `${getBaseUrl()}api/comment/getcomments?limit=5`
+        );
         const data = await res.json();
         if (res.ok) {
           setComments(data.comments);

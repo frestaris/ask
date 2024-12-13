@@ -13,6 +13,7 @@ import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 import categories from "../categories";
 import QuestionCard from "../components/QuestionCard";
 import { AiOutlineSearch } from "react-icons/ai";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function Home() {
   const [questions, setQuestions] = useState([]);
@@ -35,7 +36,10 @@ function Home() {
     const fetchQuestions = async () => {
       setLoading(true);
       try {
-        const res = await fetch("/api/question/getquestions?limit=8");
+        const res = await fetch(
+          `${getBaseUrl()}/api/question/getquestions?limit=8`
+        );
+        console.log(res);
         const data = await res.json();
         if (res.ok) {
           setAllQuestions(data.questions);
@@ -61,7 +65,7 @@ function Home() {
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/question/getquestions?startIndex=${startIndex}&limit=8`
+        `${getBaseUrl()}/api/question/getquestions?startIndex=${startIndex}&limit=8`
       );
       const data = await res.json();
       if (res.ok && data.questions && data.questions.length > 0) {
@@ -95,7 +99,7 @@ function Home() {
       for (const question of questions) {
         try {
           const res = await fetch(
-            `/api/comment/getQuestionComments/${question._id}`
+            `${getBaseUrl()}/api/comment/getQuestionComments/${question._id}`
           );
           if (res.ok) {
             const data = await res.json();

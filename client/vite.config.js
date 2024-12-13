@@ -6,10 +6,12 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+        target: "https://ask-backend-eta.vercel.app",
         secure: false,
       },
     },
   },
   plugins: [react()],
 });
+
+// https://ask-backend-eta.vercel.app

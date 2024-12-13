@@ -3,6 +3,7 @@ import { Image, Row, Col, Button, Form } from "react-bootstrap";
 import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function Comment({ comment, onLike, onEdit, onDelete }) {
   const [user, setUser] = useState({});
@@ -15,7 +16,7 @@ function Comment({ comment, onLike, onEdit, onDelete }) {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(`/api/user/${comment.userId}`);
+        const res = await fetch(`${getBaseUrl()}/api/user/${comment.userId}`);
         const data = await res.json();
         if (res.ok) {
           setUser(data);
@@ -34,13 +35,16 @@ function Comment({ comment, onLike, onEdit, onDelete }) {
 
   const handleSave = async () => {
     try {
-      const res = await fetch(`/api/comment/editComment/${comment._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content: editedContent }),
-      });
+      const res = await fetch(
+        `${getBaseUrl()}/api/comment/editComment/${comment._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content: editedContent }),
+        }
+      );
       if (res.ok) {
         setIsEditing(false);
         onEdit(comment, editedContent);

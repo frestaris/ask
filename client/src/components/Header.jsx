@@ -6,6 +6,7 @@ import { toggleTheme } from "../redux/theme/themeSlice";
 import { useSidebar } from "../contexts/SidebarContext";
 import { signoutSuccess } from "../redux/user/userSlice";
 import { toast } from "react-toastify";
+import { getBaseUrl } from "../utils/baseUrl";
 
 const Header = () => {
   const dispatch = useDispatch(toggleTheme);
@@ -18,7 +19,7 @@ const Header = () => {
 
   const handleSignout = async () => {
     try {
-      const res = await fetch("/api/user/signout", {
+      const res = await fetch(`${getBaseUrl()}/api/user/signout`, {
         method: "POST",
       });
       const data = await res.json();

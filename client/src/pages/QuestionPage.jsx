@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Button, Spinner, Container, Row, Col, Image } from "react-bootstrap";
 import CommentSection from "../components/CommentSection";
 import QuestionCard from "../components/QuestionCard";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function QuestionPage() {
   const { questionSlug } = useParams();
@@ -16,7 +17,7 @@ function QuestionPage() {
       try {
         setLoading(true);
         const res = await fetch(
-          `/api/question/getquestions?slug=${questionSlug}`
+          `${getBaseUrl()}/api/question/getquestions?slug=${questionSlug}`
         );
         const data = await res.json();
 
@@ -41,7 +42,9 @@ function QuestionPage() {
   useEffect(() => {
     try {
       const fetchRecentQuestions = async () => {
-        const res = await fetch(`/api/question/getquestions?limit=2`);
+        const res = await fetch(
+          `${getBaseUrl()}/api/question/getquestions?limit=2`
+        );
         const data = await res.json();
         if (res.ok) {
           setRecentQuestions(data.questions);

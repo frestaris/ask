@@ -9,6 +9,7 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import OAuth from "../components/OAuth";
+import { getBaseUrl } from "../utils/baseUrl";
 
 const testData = {
   email: "admin@gmail.com",
@@ -35,7 +36,7 @@ function SignIn() {
     }
     try {
       dispatch(signInStart());
-      const res = await fetch("/api/auth/signin", {
+      const res = await fetch(`${getBaseUrl()}/api/auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

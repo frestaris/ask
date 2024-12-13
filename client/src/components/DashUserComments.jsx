@@ -4,6 +4,7 @@ import { Button, Modal, Table, Spinner } from "react-bootstrap";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function DashUserComments() {
   const { theme } = useSelector((state) => state.theme);
@@ -17,7 +18,9 @@ function DashUserComments() {
     const fetchComments = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/comment/currentuser/${currentUser._id}`);
+        const res = await fetch(
+          `${getBaseUrl()}/api/comment/currentuser/${currentUser._id}`
+        );
         const data = await res.json();
 
         if (res.ok && data.comments) {
@@ -36,7 +39,7 @@ function DashUserComments() {
     setShowModal(false);
     try {
       const res = await fetch(
-        `/api/comment/deleteComment/${commentIdToDelete}`,
+        `${getBaseUrl()}/api/comment/deleteComment/${commentIdToDelete}`,
         {
           method: "DELETE",
         }

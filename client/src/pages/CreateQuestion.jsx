@@ -21,6 +21,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 import categories from "../categories";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function CreateQuestion() {
   const { theme } = useSelector((state) => state.theme);
@@ -73,7 +74,7 @@ function CreateQuestion() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/question/create", {
+      const res = await fetch(`${getBaseUrl()}/api/question/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

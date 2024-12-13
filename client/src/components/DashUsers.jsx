@@ -4,6 +4,7 @@ import { Table, Button, Modal, Spinner } from "react-bootstrap";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { toast } from "react-toastify";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function DashUsers() {
   const { theme } = useSelector((state) => state.theme);
@@ -18,7 +19,7 @@ function DashUsers() {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/user/getusers`);
+        const res = await fetch(`${getBaseUrl()}/api/user/getusers`);
         const data = await res.json();
         if (res.ok) {
           setUsers(data.users);
@@ -39,7 +40,9 @@ function DashUsers() {
     const startIndex = users.length;
     setLoading(true);
     try {
-      const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
+      const res = await fetch(
+        `${getBaseUrl()}/api/user/getusers?startIndex=${startIndex}`
+      );
       const data = await res.json();
       if (res.ok) {
         setUsers((prev) => [...prev, ...data.users]);
@@ -57,9 +60,12 @@ function DashUsers() {
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
-      const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${getBaseUrl()}/api/user/delete/${userIdToDelete}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (res.ok) {
         setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));

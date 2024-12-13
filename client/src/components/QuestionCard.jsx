@@ -3,6 +3,7 @@ import { Card, Badge } from "react-bootstrap";
 import { FaCommentAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function QuestionCard({ question, questionId }) {
   const { theme } = useSelector((state) => state.theme);
@@ -16,7 +17,7 @@ function QuestionCard({ question, questionId }) {
       }
       try {
         const res = await fetch(
-          `/api/comment/getQuestionComments/${questionId}`
+          `${getBaseUrl()}/api/comment/getQuestionComments/${questionId}`
         );
         if (res.ok) {
           const data = await res.json();

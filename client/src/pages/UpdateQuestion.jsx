@@ -19,6 +19,7 @@ import { app } from "../firebase";
 
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function UpdateQuestion() {
   const { theme } = useSelector((state) => state.theme);
@@ -35,7 +36,7 @@ function UpdateQuestion() {
   useEffect(() => {
     const fetchQuestion = async () => {
       const res = await fetch(
-        `/api/question/getquestions?questionId=${questionId}`
+        `${getBaseUrl()}/api/question/getquestions?questionId=${questionId}`
       );
       const data = await res.json();
       if (!res.ok) {

@@ -13,6 +13,7 @@ import { useSidebar } from "../contexts/SidebarContext";
 import { useSelector, useDispatch } from "react-redux";
 import { signoutSuccess } from "../redux/user/userSlice";
 import { toast } from "react-toastify";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function DashSidebar() {
   const location = useLocation();
@@ -34,7 +35,7 @@ function DashSidebar() {
 
   const handleSignout = async () => {
     try {
-      const res = await fetch("/api/user/signout", {
+      const res = await fetch(`${getBaseUrl()}/api/user/signout`, {
         method: "POST",
       });
       const data = await res.json();

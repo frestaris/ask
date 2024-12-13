@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { RiEdit2Fill } from "react-icons/ri";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { toast } from "react-toastify";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function DashQuestions() {
   const { currentUser } = useSelector((state) => state.user);
@@ -19,7 +20,7 @@ function DashQuestions() {
     const fetchQuestions = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/question/getquestions`);
+        const res = await fetch(`${getBaseUrl()}/api/question/getquestions`);
         const data = await res.json();
 
         if (res.ok && data.questions) {
@@ -43,7 +44,7 @@ function DashQuestions() {
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/question/getquestions?startIndex=${startIndex}`
+        `${getBaseUrl()}/api/question/getquestions?startIndex=${startIndex}`
       );
       const data = await res.json();
       console.log(data);
@@ -64,7 +65,9 @@ function DashQuestions() {
     setShowModal(false);
     try {
       const res = await fetch(
-        `/api/question/deletequestion/${questionIdToDelete}/${currentUser._id}`,
+        `${getBaseUrl()}/api/question/deletequestion/${questionIdToDelete}/${
+          currentUser._id
+        }`,
         { method: "DELETE" }
       );
       const data = await res.json();

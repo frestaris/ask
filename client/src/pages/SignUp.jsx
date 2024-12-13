@@ -4,6 +4,7 @@ import { Form, InputGroup, Button, Spinner, Alert } from "react-bootstrap";
 import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
 import { useSelector } from "react-redux";
+import { getBaseUrl } from "../utils/baseUrl";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -25,7 +26,7 @@ function SignUp() {
     try {
       setLoading(true);
       setErrorMessage(null);
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch(`${getBaseUrl()}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
