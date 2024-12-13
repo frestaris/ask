@@ -39,7 +39,6 @@ function Home() {
         const res = await fetch(
           `${getBaseUrl()}/api/question/getquestions?limit=8`
         );
-        console.log(res);
         const data = await res.json();
         if (res.ok) {
           setAllQuestions(data.questions);

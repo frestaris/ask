@@ -19,7 +19,13 @@ function DashUsers() {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`${getBaseUrl()}/api/user/getusers`);
+        const res = await fetch(`${getBaseUrl()}/api/user/getusers`, {
+          method: "GET", // You can specify the method if needed
+          headers: {
+            "Content-Type": "application/json", // You can add other headers as needed
+          },
+          credentials: "include", // This ensures cookies are included in the request
+        });
         const data = await res.json();
         if (res.ok) {
           setUsers(data.users);
