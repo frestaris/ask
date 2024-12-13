@@ -13,5 +13,3 @@ export default defineConfig({
   },
   plugins: [react()],
 });
-
-// https://ask-backend-eta.vercel.app

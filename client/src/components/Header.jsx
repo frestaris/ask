@@ -21,6 +21,7 @@ const Header = () => {
     try {
       const res = await fetch(`${getBaseUrl()}/api/user/signout`, {
         method: "POST",
+        credentials: "include",
       });
       const data = await res.json();
       if (!res.ok) {

@@ -26,7 +26,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://ask-frontend-virid.vercel.app",
     credentials: true,
   })
 );
