@@ -61,7 +61,10 @@ export const signin = async (req, res, next) => {
         secure: true,
         sameSite: "None",
       })
-      .json(rest);
+      .json({
+        ...rest,
+        token: token,
+      });
   } catch (error) {
     next(error);
   }
