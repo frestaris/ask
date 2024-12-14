@@ -45,7 +45,6 @@ function SignIn() {
         credentials: "include",
       });
       const data = await res.json();
-      console.log("Response data:", data);
       if (data.success === false) {
         dispatch(signInFailure(data.message));
       }

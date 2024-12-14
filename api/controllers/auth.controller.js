@@ -52,7 +52,6 @@ export const signin = async (req, res, next) => {
       },
       process.env.JWT_SECRET_KEY
     );
-    console.log("Generated token:", token);
     const { password: pass, ...rest } = validUser._doc;
     res
       .status(200)
