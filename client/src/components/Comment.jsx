@@ -16,7 +16,9 @@ function Comment({ comment, onLike, onEdit, onDelete }) {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(`${getBaseUrl()}/api/user/${comment.userId}`);
+        const res = await fetch(`${getBaseUrl()}/api/user/${comment.userId}`, {
+          credentials: "include",
+        });
         const data = await res.json();
         if (res.ok) {
           setUser(data);
@@ -43,6 +45,7 @@ function Comment({ comment, onLike, onEdit, onDelete }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ content: editedContent }),
+          credentials: "include",
         }
       );
       if (res.ok) {

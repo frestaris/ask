@@ -66,6 +66,7 @@ function DashProfile() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
+          credentials: "include",
         }
       );
       const data = await res.json();
@@ -139,6 +140,7 @@ function DashProfile() {
         `${getBaseUrl()}/api/user/delete/${currentUser._id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       const data = await res.json();

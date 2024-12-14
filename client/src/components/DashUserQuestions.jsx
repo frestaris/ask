@@ -43,7 +43,10 @@ function DashUserQuestions() {
         `${getBaseUrl()}/api/question/deletequestion/${questionIdToDelete}/${
           currentUser._id
         }`,
-        { method: "DELETE" }
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
       );
       const data = await res.json();
 

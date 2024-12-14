@@ -19,7 +19,9 @@ function DashComments() {
     const fetchComments = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`${getBaseUrl()}/api/comment/getcomments`);
+        const res = await fetch(`${getBaseUrl()}/api/comment/getcomments`, {
+          credentials: "include",
+        });
         const data = await res.json();
         if (res.ok) {
           setComments(data.comments);
@@ -41,7 +43,10 @@ function DashComments() {
     setLoading(true);
     try {
       const res = await fetch(
-        `${getBaseUrl()}/api/comment/getcomments?startIndex=${startIndex}`
+        `${getBaseUrl()}/api/comment/getcomments?startIndex=${startIndex}`,
+        {
+          credentials: "include",
+        }
       );
       const data = await res.json();
       if (res.ok) {
@@ -64,6 +69,7 @@ function DashComments() {
         `${getBaseUrl()}/api/comment/deleteComment/${commentIdToDelete}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       const data = await res.json();

@@ -24,7 +24,10 @@ function CommentSection({ questionId }) {
       }
       try {
         const res = await fetch(
-          `${getBaseUrl()}/api/comment/getQuestionComments/${questionId}`
+          `${getBaseUrl()}/api/comment/getQuestionComments/${questionId}`,
+          {
+            credentials: "include",
+          }
         );
         if (res.ok) {
           const data = await res.json();
@@ -49,6 +52,7 @@ function CommentSection({ questionId }) {
           questionId,
           userId: currentUser._id,
         }),
+        credentials: "include",
       });
       const data = await res.json();
       if (res.ok) {
@@ -71,6 +75,7 @@ function CommentSection({ questionId }) {
         `${getBaseUrl()}/api/comment/likeComment/${commentId}`,
         {
           method: "PUT",
+          credentials: "include",
         }
       );
       if (res.ok) {
@@ -111,6 +116,7 @@ function CommentSection({ questionId }) {
         `${getBaseUrl()}/api/comment/deleteComment/${commentId}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       if (res.ok) {

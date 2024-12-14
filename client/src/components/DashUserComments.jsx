@@ -19,7 +19,10 @@ function DashUserComments() {
       setLoading(true);
       try {
         const res = await fetch(
-          `${getBaseUrl()}/api/comment/currentuser/${currentUser._id}`
+          `${getBaseUrl()}/api/comment/currentuser/${currentUser._id}`,
+          {
+            credentials: "include",
+          }
         );
         const data = await res.json();
 
@@ -42,6 +45,7 @@ function DashUserComments() {
         `${getBaseUrl()}/api/comment/deleteComment/${commentIdToDelete}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       const data = await res.json();
