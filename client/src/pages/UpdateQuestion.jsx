@@ -98,7 +98,9 @@ function UpdateQuestion() {
     }
     try {
       const res = await fetch(
-        `/api/question/updatequestion/${formData._id}/${currentUser._id}`,
+        `${getBaseUrl()}/api/question/updatequestion/${formData._id}/${
+          currentUser._id
+        }`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

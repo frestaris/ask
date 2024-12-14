@@ -20,7 +20,10 @@ function DashUserQuestions() {
       setLoading(true);
       try {
         const res = await fetch(
-          `${getBaseUrl()}/api/question/currentuser/${currentUser._id}`
+          `${getBaseUrl()}/api/question/currentuser/${currentUser._id}`,
+          {
+            credentials: "include",
+          }
         );
         const data = await res.json();
 
