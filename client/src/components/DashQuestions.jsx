@@ -20,7 +20,10 @@ function DashQuestions() {
     const fetchQuestions = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`${getBaseUrl()}/api/question/getquestions`);
+        const res = await fetch(`${getBaseUrl()}/api/question/getquestions`, {
+          method: "GET",
+          credentials: "include", // Ensure credentials (cookies) are included
+        });
         const data = await res.json();
 
         if (res.ok && data.questions) {
@@ -44,7 +47,11 @@ function DashQuestions() {
     setLoading(true);
     try {
       const res = await fetch(
-        `${getBaseUrl()}/api/question/getquestions?startIndex=${startIndex}`
+        `${getBaseUrl()}/api/question/getquestions?startIndex=${startIndex}`,
+        {
+          method: "GET",
+          credentials: "include", // Ensure credentials (cookies) are included
+        }
       );
       const data = await res.json();
       console.log(data);
@@ -68,7 +75,10 @@ function DashQuestions() {
         `${getBaseUrl()}/api/question/deletequestion/${questionIdToDelete}/${
           currentUser._id
         }`,
-        { method: "DELETE" }
+        {
+          method: "DELETE",
+          credentials: "include", // Include credentials (cookies)
+        }
       );
       const data = await res.json();
       if (!res.ok) {
