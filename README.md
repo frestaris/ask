@@ -2,7 +2,7 @@
 
 A responsive, Reddit-style Q&A web application where users can post questions and provide answers. Built with the MERN stack, it features user authentication, image uploads, state management using Redux, and more.
 
-![Home Page](https://github.com/frestaris/ask/raw/main/client/src/assets/homepage.png)
+![Home Page](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/homepage.png)
 
 <p align="center">
   🔗 <strong><a href="https://ask-frontend-virid.vercel.app/">Live Demo</a></strong>
@@ -12,31 +12,31 @@ A responsive, Reddit-style Q&A web application where users can post questions an
 
 ### Question View + Comments
 
-![Question with Comments](https://github.com/frestaris/ask/raw/main/client/src/assets/question-page.png)
-![Comments](https://github.com/frestaris/ask/raw/main/client/src/assets/comment-section.png)
+![Question with Comments](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/question-page.png)
+![Comment Section](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/comment-section.png)
 
 ### Ask Question
 
-![Ask Question](https://github.com/frestaris/ask/raw/main/client/src/assets/create-question.png)
+![Ask Question](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/create-question.png)
 
 ### Search Bar
 
-![Search Bar](https://github.com/frestaris/ask/raw/main/client/src/assets/searchbar.png)
+![Search Bar](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/searchbar.png)
 
 ### User Dashboard
 
-![User Dashboard](https://github.com/frestaris/ask/raw/main/client/src/assets/user-dashboard.png)
-![User Board](https://github.com/frestaris/ask/raw/main/client/src/assets/user-board.png)
+![User Dashboard](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/user-dashboard.png)
 
 ### Admin Dashboard
 
-![Admin Dashboard](https://github.com/frestaris/ask/raw/main/client/src/assets/admin-dashboard.png)
-![Admin Comments Board](https://github.com/frestaris/ask/raw/main/client/src/assets/comments-board.png)
-![Admin Questions Board](https://github.com/frestaris/ask/raw/main/client/src/assets/question-board.png)
+![Admin Dashboard](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/admin-dashboard.png)
+![Admin Comments Board](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/comments-board.png)
+![Admin Questions Board](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/question-board.png)
+![Admin Users Board](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/users-board.png)
 
 ### Edit Profile
 
-![Edit Profile](https://github.com/frestaris/ask/raw/main/client/src/assets/edit-profile.png)
+![Edit Profile](https://raw.githubusercontent.com/frestaris/ask/main/client/src/assets/screenshots/edit-profile.png)
 
 ---
 
